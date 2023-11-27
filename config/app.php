@@ -15,7 +15,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-
+    'per_page_items' => 10,
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

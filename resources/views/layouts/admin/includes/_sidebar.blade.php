@@ -16,20 +16,20 @@
         </a>
     </li>
     <li>
-        <a class="@if(request()->routeIs('admin.units.index')) active @endif" href="{{ route('admin.units.index') }}">
+        <a class="@if(request()->routeIs('admin.units.*')) active @endif" href="{{ route('admin.units.index') }}">
             <i class="fa fa-box"></i>
             <span>Units Management</span>
         </a>
     </li>
     <li>
-        <a class="@if(request()->routeIs('admin.owners.index')) active @endif" href="{{ route('admin.owners.index') }}">
+        <a class="@if(request()->routeIs('admin.owners.*')) active @endif" href="{{ route('admin.owners.index') }}">
             <i class="fa fa-users"></i>
             <span>Owners</span>
         </a>
     </li>
 
     <li>
-        <a class="@if(request()->routeIs('admin.tenants.index')) active @endif" href="{{ route('admin.tenants.index') }}">
+        <a class="@if(request()->routeIs('admin.tenants.*')) active @endif" href="{{ route('admin.tenants.index') }}">
             <i class="fa fa-users"></i>
             <span>Tenants</span>
         </a>

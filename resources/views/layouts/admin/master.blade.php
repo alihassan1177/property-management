@@ -20,6 +20,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     @yield('styles')
@@ -37,6 +38,7 @@
                     @include('layouts.admin.includes._topbar')
                 </div>
                 <div class="container-lg">
+                    @include('layouts.admin.includes._result-notifications')
                     @yield('content')
                 </div>
             </div>
@@ -45,6 +47,7 @@
 
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
     @yield('scripts')

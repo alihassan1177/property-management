@@ -167,3 +167,8 @@ a.btn{
 .text-tertiary{
     color: var(--color-tertiary);
 }
+
+.page-item.active .page-link {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}

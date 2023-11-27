@@ -16,11 +16,24 @@ Route::group(['middleware' => ['guest'], 'as' => 'admin.'], function () {
 Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/units', [UnitController::class, 'index'])->name('units.index');
+    Route::group(['prefix' => 'units'], function(){
+        Route::get('/', [UnitController::class, 'index'])->name('units.index');
+        Route::get('/create', [UnitController::class, 'create'])->name('units.create');
+    });
 
     Route::get('/financial-tracking', [FinancialTrackingController::class, 'index'])->name('financial-tracking.index');
+    
+    Route::group(['prefix' => 'tenants'], function(){
+        Route::get('/', [TenantController::class, 'index'])->name('tenants.index');
+        Route::get('/create', [TenantController::class, 'create'])->name('tenants.create');
+    });
 
-    Route::get('/tenants', [TenantController::class, 'index'])->name('tenants.index');
-
-    Route::get('/owners', [OwnerController::class, 'index'])->name('owners.index');
+    Route::group(['prefix' => 'owners'], function(){
+        Route::get('/', [OwnerController::class, 'index'])->name('owners.index');
+        Route::get('/create', [OwnerController::class, 'create'])->name('owners.create');
+        Route::post('/store', [OwnerController::class, 'store'])->name('owners.store');
+        Route::get('/edit/{id}', [OwnerController::class, 'edit'])->name('owners.edit');
+        Route::post('/update/{id}', [OwnerController::class, 'update'])->name('owners.update');
+    });
+    
 });

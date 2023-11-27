@@ -20,12 +20,9 @@
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <button class="btn">
-                Refresh
-            </button>
-            <button class="btn btn-primary">
+            <a href="{{ route('admin.units.create') }}" class="btn btn-primary">
                 Add new Unit
-            </button>
+            </a>
         </div>
     </div>
 

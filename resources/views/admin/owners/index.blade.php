@@ -1,27 +1,25 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Manage Tenants')
+@section('title', 'Manage Owners')
 
 @section('content')
 
 <div class="page-header">
     <div class="d-flex align-items-center">
-        <a href="#" class="btn">
-            <i class="fa fa-arrow-left"></i>
-        </a>
         <h3>Manage Owners</h3>
     </div>
 </div>
 
 
 <div class="bg-light p-4 rounded">
+
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h4 class="m-0">All Owners</h4>
         <div class="d-flex gap-3">
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <a href="add-invoice.html" class="btn btn-primary">
+            <a href="{{ route('admin.owners.create') }}" class="btn btn-primary">
                 Add new Owner
             </a>
         </div>
@@ -35,33 +33,38 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
-                    <th scope="col">Address</th>
                 </tr>
             </thead>
             <tbody>
+
+                @if (!$owners->count())
                 <tr>
-                    <th scope="row">U123</th>
-                    <td>123 Main Street, Cityvile, 56789</td>
-                    <td>CAD567890</td>
-                    <td>ON4567</td>
-                    <td>(555) 123-4567</td>
+                    <td colspan="4">
+                        <p class="text-center m-0 py-3">No results found</p>
+                    </td>
                 </tr>
+                @endif
+
+                @foreach ($owners as $owner)
+
+                @php
+                $row = ($owners ->currentpage() - 1) * $owners ->perpage() + $loop->index + 1;
+                @endphp
+
+                <tr>
+                    <th scope="row">{{ $row }}</th>
+                    <td>{{ $owner->name }}</td>
+                    <td>{{ $owner->email }}</td>
+                    <td>{{ $owner->phone }}</td>
+                </tr>
+                @endforeach
+
             </tbody>
         </table>
     </div>
 
-    <div>
-        <nav class="float-end" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-left"></i></a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-right"></i></a></li>
-            </ul>
-        </nav>
+    <div class="float-end">
+        {{ $owners->links() }}
     </div>
 
 </div>
