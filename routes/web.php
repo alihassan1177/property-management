@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // Change this according to the requirement
+    return redirect()->route('admin.dashboard.index');
 });

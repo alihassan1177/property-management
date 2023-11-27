@@ -1,3 +1,169 @@
 :root{
     --bs-font-sans-serif : "Nunito";
+
+    --color-primary : #1B98F5;
+    --color-secondary : #f0f0f0;
+    --color-tertiary : #22075E;
+
+}
+
+a, .text-primary{
+    color: var(--color-primary) !important;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.btn-primary{
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn:active{
+    scale: 0.90;
+}
+
+.content{
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.logo-area {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.logo-area p{
+    margin: 0px;
+}
+
+.navigation {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.navigation li i {
+    width: 25px;
+    text-align: center;
+}
+
+.navigation a.active{
+    background-color: var(--color-primary);
+    color: white !important;
+}
+
+.navigation li a{
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--bs-dark) !important;
+}
+
+.navigation li a:not(.active):hover{
+    background-color: var(--color-secondary);
+}
+
+.sidebar {
+    overflow: hidden;
+}
+
+.sidebar .navigation span, .sidebar .navigation a{
+    text-wrap: nowrap;
+}
+
+.sidebar.minimized .navigation span {
+    display: none;
+}
+
+.sidebar .navigation i{
+    transition: all 300ms ease-in-out;
+}
+
+.sidebar.minimized .navigation i {
+    font-size: 24px;
+    width: 100%;
+}
+
+.content, .sidebar {
+    transition: all 300ms ease-in-out;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h3 {
+    margin: 0px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+a.btn{
+    color: white !important;
+}
+
+.progress-wrapper h4{
+    font-size: 16px;
+    text-wrap: nowrap;
+    min-width: 120px;
+}
+
+.progress-wrapper p {
+    min-width: 5ch;
+    padding-left: 10px;
+}
+
+.progress-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.progress, .progress-stacked {
+    --bs-progress-height: 10px;
+}
+
+.progress-bar {
+    border-radius: var(--bs-border-radius);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-tertiary);
+    margin-bottom: 20px;
+}
+
+.circle-progress-wrapper{
+    border-radius: 100%;
+    border: 10px dashed var(--color-primary);
+    width: 200px;
+    aspect-ratio: 1;
+    margin: auto;
+    display: grid;
+    place-items: center;
+}
+
+.circle-progress-wrapper h2{
+    font-size: 36px;
+}
+
+.text-tertiary{
+    color: var(--color-tertiary);
 }
