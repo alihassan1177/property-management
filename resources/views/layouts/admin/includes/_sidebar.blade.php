@@ -10,19 +10,33 @@
 
 <ul class="navigation">
     <li>
-        <a class="active" href="index.html">
+        <a class="@if(request()->routeIs('admin.dashboard.index')) active @endif" href="{{ route('admin.dashboard.index') }}">
             <i class="fa fa-gauge-high"></i>
             <span>Dashboard</span>
         </a>
     </li>
     <li>
-        <a href="unit-managment.html">
+        <a class="@if(request()->routeIs('admin.units.index')) active @endif" href="{{ route('admin.units.index') }}">
             <i class="fa fa-box"></i>
             <span>Units Management</span>
         </a>
     </li>
     <li>
-        <a href="financial-tracking.html">
+        <a class="@if(request()->routeIs('admin.owners.index')) active @endif" href="{{ route('admin.owners.index') }}">
+            <i class="fa fa-users"></i>
+            <span>Owners</span>
+        </a>
+    </li>
+
+    <li>
+        <a class="@if(request()->routeIs('admin.tenants.index')) active @endif" href="{{ route('admin.tenants.index') }}">
+            <i class="fa fa-users"></i>
+            <span>Tenants</span>
+        </a>
+    </li>
+
+    <li>
+        <a class="@if(request()->routeIs('admin.financial-tracking.index')) active @endif" href="{{ route('admin.financial-tracking.index') }}">
             <i class="fa fa-file"></i>
             <span>Financial Tracking</span>
         </a>
