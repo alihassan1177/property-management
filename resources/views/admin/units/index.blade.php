@@ -6,9 +6,6 @@
 
 <div class="page-header">
     <div class="d-flex align-items-center">
-        <a href="#" class="btn">
-            <i class="fa fa-arrow-left"></i>
-        </a>
         <h3>Units Management</h3>
     </div>
 </div>
@@ -38,29 +35,47 @@
                 </tr>
             </thead>
             <tbody>
+                @if (!$units->count())
                 <tr>
-                    <th scope="row">U123</th>
-                    <td>123 Main Street, Cityvile, 56789</td>
-                    <td>CAD567890</td>
-                    <td>ON4567</td>
-                    <td>(555) 123-4567</td>
+                    <td>
+                        <p class="text-center m-0 py-3">No results found</p>
+                    </td>
                 </tr>
+                @endif
+
+                @foreach ($units as $property)
+
+                @php
+                $row = ($units ->currentpage() - 1) * $units ->perpage() + $loop->index + 1;
+                @endphp
+
+                <tr>
+                    <th scope="row">{{ $row }}</th>
+                    <td>{{ $property->address }}</td>
+                    <td>{{ $property->cadastral_number }}</td>
+                    <td>{{ $property->owner->name }}</td>
+                    <td>{{ $property->owner->phone }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
-    <div>
-        <nav class="float-end" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-left"></i></a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-right"></i></a></li>
-            </ul>
-        </nav>
+    <div class="float-end">
+        {{ $units->links() }}
     </div>
 
 </div>

@@ -110,10 +110,6 @@ body{
     font-weight: bold;
 }
 
-.btn i {
-    margin-right: 5px;
-}
-
 a.btn{
     color: white !important;
 }
@@ -171,4 +167,8 @@ a.btn{
 .page-item.active .page-link {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
+}
+
+.dropdown-toggle::after {
+    content: none;
 }
