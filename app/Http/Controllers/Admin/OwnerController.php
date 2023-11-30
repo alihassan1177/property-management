@@ -34,7 +34,7 @@ class OwnerController extends Controller
             [
                 'name' => 'required|min:6|max:128',
                 'email' => 'required|email|unique:users,email|max:256',
-                'phone' => 'required|min:11|max:11|unique:users,phone,'
+                'phone' => 'required|min:11|max:11|unique:users,phone'
             ]
         );
 
@@ -44,15 +44,21 @@ class OwnerController extends Controller
 
         $validated = $validator->validated();
 
-        User::create([
-            'name' =>  $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'user_type' => UserType::Owner,
-            'password' => bcrypt('password')
-        ]);
 
-        $this->successNotification('New Owner added successfully');
+        try {
+            User::create([
+                'name' =>  $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'user_type' => UserType::Owner,
+                'password' => bcrypt('password')
+            ]);
+
+            $this->successNotification('New Owner added successfully');
+        } catch (\Exception $e) {
+            info('OWNER CONTROLLER : STORE => ' . $e->getMessage());
+            $this->errorNotification("Something went wrong, please try again later");
+        }
 
         return redirect()->route('admin.owners.index');
     }

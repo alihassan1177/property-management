@@ -25,7 +25,6 @@ class Property extends Model
         'tenant_id'
     ];
 
-
     function owner() {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }

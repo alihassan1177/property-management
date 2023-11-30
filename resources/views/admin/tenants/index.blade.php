@@ -6,26 +6,19 @@
 
 <div class="page-header">
     <div class="d-flex align-items-center">
-        <a href="#" class="btn">
-            <i class="fa fa-arrow-left"></i>
-        </a>
-        <h3>All Tenants</h3>
+        <h3>Manage Tenants</h3>
     </div>
 </div>
 
-
 <div class="bg-light p-4 rounded">
     <div class="d-flex align-items-center justify-content-between mb-5">
-        <h4 class="m-0">All Invoices</h4>
+        <h4 class="m-0">All Tenants</h4>
         <div class="d-flex gap-3">
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <button class="btn">
-                Refresh
-            </button>
-            <a href="add-invoice.html" class="btn btn-primary">
-                Add new Invoice
+            <a href="{{ route('admin.tenants.create') }}" class="btn btn-primary">
+                Add new Tenant
             </a>
         </div>
     </div>
@@ -34,37 +27,45 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Unit no</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Cadastral Number</th>
-                    <th scope="col">Owner Name</th>
-                    <th scope="col">Owner Phone</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($tenants as $tenant)
+
+                @php
+                $row = ($tenants ->currentpage() - 1) * $tenants ->perpage() + $loop->index + 1;
+                @endphp
+
                 <tr>
-                    <th scope="row">U123</th>
-                    <td>123 Main Street, Cityvile, 56789</td>
-                    <td>CAD567890</td>
-                    <td>ON4567</td>
-                    <td>(555) 123-4567</td>
+                    <th scope="row">{{ $row }}</th>
+                    <td>{{ $tenant->name }}</td>
+                    <td>{{ $tenant->email }}</td>
+                    <td>{{ $tenant->phone }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>                        
+                    </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
-    <div>
-        <nav class="float-end" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-left"></i></a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-right"></i></a></li>
-            </ul>
-        </nav>
+    <div class="float-end">
+        {{ $tenants->links() }}
     </div>
 
 </div>

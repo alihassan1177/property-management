@@ -27,7 +27,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Unit no</th>
+                    <th scope="col">#</th>
                     <th scope="col">Address</th>
                     <th scope="col">Cadastral Number</th>
                     <th scope="col">Owner Name</th>
@@ -37,7 +37,7 @@
             <tbody>
                 @if (!$units->count())
                 <tr>
-                    <td>
+                    <td colspan="5">
                         <p class="text-center m-0 py-3">No results found</p>
                     </td>
                 </tr>

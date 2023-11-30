@@ -27,6 +27,7 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
     Route::group(['prefix' => 'tenants'], function(){
         Route::get('/', [TenantController::class, 'index'])->name('tenants.index');
         Route::get('/create', [TenantController::class, 'create'])->name('tenants.create');
+        Route::post('/store', [TenantController::class, 'store'])->name('tenants.store');
     });
 
     Route::group(['prefix' => 'owners'], function(){

@@ -56,6 +56,19 @@
                     <td>{{ $owner->name }}</td>
                     <td>{{ $owner->email }}</td>
                     <td>{{ $owner->phone }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
 

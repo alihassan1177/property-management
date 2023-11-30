@@ -172,3 +172,11 @@ a.btn{
 .dropdown-toggle::after {
     content: none;
 }
+
+.auth-content-wrapper{
+    max-width: 400px;
+    margin: auto;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
