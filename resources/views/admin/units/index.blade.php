@@ -30,6 +30,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Address</th>
                     <th scope="col">Cadastral Number</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Owner Name</th>
                     <th scope="col">Owner Phone</th>
                 </tr>
@@ -53,6 +54,7 @@
                     <th scope="row">{{ $row }}</th>
                     <td>{{ $property->address }}</td>
                     <td>{{ $property->cadastral_number }}</td>
+                    <td>{{ ucfirst(str_replace("_", " ", $property->status)) }}</td>
                     <td>{{ $property->owner->name }}</td>
                     <td>{{ $property->owner->phone }}</td>
                     <td>
