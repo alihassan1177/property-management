@@ -34,8 +34,10 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/', [OwnerController::class, 'index'])->name('owners.index');
         Route::get('/create', [OwnerController::class, 'create'])->name('owners.create');
         Route::post('/store', [OwnerController::class, 'store'])->name('owners.store');
+        Route::get('/show/{id}', [OwnerController::class, 'show'])->name('owners.show');
         Route::get('/edit/{id}', [OwnerController::class, 'edit'])->name('owners.edit');
         Route::post('/update/{id}', [OwnerController::class, 'update'])->name('owners.update');
+        Route::delete('/delete/{id}', [OwnerController::class, 'delete'])->name('owners.delete');
     });
     
 });

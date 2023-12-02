@@ -26,7 +26,9 @@ class User extends Authenticatable
     ];
 
     public static $rules = [
-
+        'name' => 'required|min:6|max:128',
+        'email' => 'required|email|unique:users,email|max:256',
+        'phone' => 'required|min:11|max:11|unique:users,phone'
     ];
 
     /**
@@ -48,4 +50,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    function property() {
+        return $this->hasMany(Property::class, "owner_id", "id");
+    }
 }

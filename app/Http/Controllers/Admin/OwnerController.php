@@ -17,6 +17,7 @@ class OwnerController extends Controller
     function index()
     {
         $owners = User::where(['user_type' => UserType::Owner])
+            ->withCount('property')
             ->latest()
             ->paginate(config('app.per_page_items'));
         return view('admin.owners.index', compact('owners'));
@@ -31,11 +32,7 @@ class OwnerController extends Controller
     {
         $validator = Validator::make(
             $request->all(),
-            [
-                'name' => 'required|min:6|max:128',
-                'email' => 'required|email|unique:users,email|max:256',
-                'phone' => 'required|min:11|max:11|unique:users,phone'
-            ]
+            User::$rules
         );
 
         if ($validator->fails()) {
@@ -43,7 +40,6 @@ class OwnerController extends Controller
         }
 
         $validated = $validator->validated();
-
 
         try {
             User::create([
@@ -63,13 +59,57 @@ class OwnerController extends Controller
         return redirect()->route('admin.owners.index');
     }
 
-    function show()
+    function update(Request $request, $id)
     {
-        return view('admin.owners.show');
+        $owner = User::where(['user_type' => UserType::Owner, 'id' => $id])->firstOrFail();
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|min:6|max:128',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            $owner->update([
+                'name' =>  $validated['name']
+            ]);
+
+            $this->successNotification('Owner updated successfully');
+        } catch (\Exception $e) {
+            info('OWNER CONTROLLER : UPDATE => ' . $e->getMessage());
+            $this->errorNotification("Something went wrong, please try again later");
+        }
+
+        return redirect()->route('admin.owners.index');
     }
 
-    function edit()
+    function show($id)
+    {  
+        $owner = User::where(['user_type' => UserType::Owner, 'id' => $id])->with('property')->firstOrFail();
+        return view('admin.owners.show', compact('owner'));
+    }
+
+    function edit($id)
     {
-        return view('admin.owners.edit');
+        $owner = User::where(['user_type' => UserType::Owner, 'id' => $id])->firstOrFail();
+        return view('admin.owners.edit', compact("owner"));
+    }
+
+    function delete($id){
+        $owner = User::where(['user_type' => UserType::Owner, 'id' => $id])->withCount('property')->firstOrFail();
+        if ($owner->property_count == 0) {
+            $owner->delete();
+            $this->successNotification("Owner removed successfully");
+        }else{
+            $this->errorNotification("Owner cannot be removed");
+        }
+        return redirect()->route('admin.owners.index');
     }
 }
