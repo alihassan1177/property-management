@@ -32,7 +32,11 @@ class OwnerController extends Controller
     {
         $validator = Validator::make(
             $request->all(),
-            User::$rules
+            [
+                'name' => 'required|min:6|max:128',
+                'email' => 'required|email|unique:users,email|max:256',
+                'phone' => 'required|min:11|max:11|unique:users,phone'
+            ]
         );
 
         if ($validator->fails()) {

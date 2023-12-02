@@ -28,4 +28,8 @@ class Property extends Model
     function owner() {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }
+
+    function tenant() {
+        return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
+    }
 }

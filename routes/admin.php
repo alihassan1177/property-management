@@ -20,6 +20,10 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/', [UnitController::class, 'index'])->name('units.index');
         Route::get('/create', [UnitController::class, 'create'])->name('units.create');
         Route::post('/store', [UnitController::class, 'store'])->name('units.store');
+        Route::get('/show/{id}', [UnitController::class, 'show'])->name('units.show');
+        Route::get('/edit/{id}', [UnitController::class, 'edit'])->name('units.edit');
+        Route::post('/update/{id}', [UnitController::class, 'update'])->name('units.update');
+        Route::delete('/delete/{id}', [UnitController::class, 'delete'])->name('units.delete');
     });
 
     Route::get('/financial-tracking', [FinancialTrackingController::class, 'index'])->name('financial-tracking.index');

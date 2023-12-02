@@ -53,7 +53,7 @@
                 <tr>
                     <th scope="row">{{ $row }}</th>
                     <td>{{ $property->address }}</td>
-                    <td>{{ $property->cadastral_number }}</td>
+                    <td>{{ strtoupper($property->cadastral_number) }}</td>
                     <td>{{ ucfirst(str_replace("_", " ", $property->status)) }}</td>
                     <td>{{ $property->owner->name }}</td>
                     <td>{{ $property->owner->phone }}</td>
@@ -64,9 +64,28 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.units.show', $property->id) }}">
+                                        <button>View</button>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.units.edit', $property->id) }}">
+                                        <button>Update</button>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <form class="dropdown-item" action="{{ route('admin.units.delete', $property->id) }}" method="POST"
+                                        onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button type="submit">
+                                        Delete
+                                    </button>
+                                  </form>
+                                </li>
                             </ul>
                         </div>
                     </td>

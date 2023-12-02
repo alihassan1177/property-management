@@ -57,7 +57,8 @@ class TenantController extends Controller
             $values = array_merge($validated, $additional_values);
             $tenant = Tenant::create($values);
             $tenant->property()->update([
-                'status' => UnitStatus::OnRent
+                'status' => UnitStatus::OnRent,
+                'tenant_id' => $tenant->id
             ]);
             $this->successNotification('New tenant added successfully');
         } catch (\Exception $e) {

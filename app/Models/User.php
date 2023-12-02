@@ -25,11 +25,6 @@ class User extends Authenticatable
         'user_type'
     ];
 
-    public static $rules = [
-        'name' => 'required|min:6|max:128',
-        'email' => 'required|email|unique:users,email|max:256',
-        'phone' => 'required|min:11|max:11|unique:users,phone'
-    ];
 
     /**
      * The attributes that should be hidden for serialization.
