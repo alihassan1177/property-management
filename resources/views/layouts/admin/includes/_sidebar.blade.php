@@ -59,16 +59,4 @@
             <span>Address Book</span>
         </a>
     </li>
-    <li>
-        <a href="">
-            <i class="fa fa-user-group"></i>
-            <span>Admin</span>
-        </a>
-    </li>
-    <li>
-        <a href="">
-            <i class="fa fa-cog"></i>
-            <span>Settings</span>
-        </a>
-    </li>
 </ul>
