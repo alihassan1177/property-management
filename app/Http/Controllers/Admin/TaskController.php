@@ -31,7 +31,8 @@ class TaskController extends Controller
 
     function edit($id)  {
         $task = Task::with(['user', 'tenant'])->findOrFail($id);
-        return view('admin.tasks.edit', compact('task'));
+        $statuses = TaskStatus::cases();
+        return view('admin.tasks.edit', compact('task', 'statuses'));
     }
 
     function store(Request $request) {
@@ -117,7 +118,7 @@ class TaskController extends Controller
 
     function delete($id) {
         $task = Task::findOrFail($id);
-        
+
         if ($task->status == TaskStatus::Draft->value) {
             $task->delete();
             $this->successNotification("Task removed successfully");
