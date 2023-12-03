@@ -42,7 +42,7 @@
         </a>
     </li>
     <li>
-        <a href="">
+        <a class="@if(request()->routeIs('admin.tasks.*')) active @endif" href="{{ route('admin.tasks.index') }}">
             <i class="fa fa-file-circle-check"></i>
             <span>Tasks</span>
         </a>

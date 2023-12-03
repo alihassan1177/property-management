@@ -17,8 +17,8 @@
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <a href="{{ route('admin.units.create') }}" class="btn btn-primary">
-                Add new Unit
+            <a href="{{ route('admin.tasks.create') }}" class="btn btn-primary">
+                Add new Task
             </a>
         </div>
     </div>
@@ -28,15 +28,14 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Cadastral Number</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Owner Name</th>
-                    <th scope="col">Owner Phone</th>
+                    <th scope="col">Assignee</th>
+                    <th scope="col">Assigned Date</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Task Description</th>
                 </tr>
             </thead>
             <tbody>
-                @if (!$units->count())
+                @if (!$tasks->count())
                 <tr>
                     <td colspan="5">
                         <p class="text-center m-0 py-3">No results found</p>
@@ -44,19 +43,23 @@
                 </tr>
                 @endif
 
-                @foreach ($units as $property)
-
+                @foreach ($tasks as $task)
                 @php
-                $row = ($units ->currentpage() - 1) * $units ->perpage() + $loop->index + 1;
+                $row = ($tasks ->currentpage() - 1) * $tasks ->perpage() + $loop->index + 1;
                 @endphp
 
                 <tr>
                     <th scope="row">{{ $row }}</th>
-                    <td>{{ $property->address }}</td>
-                    <td>{{ strtoupper($property->cadastral_number) }}</td>
-                    <td>{{ ucfirst(str_replace("_", " ", $property->status)) }}</td>
-                    <td>{{ $property->owner->name }}</td>
-                    <td>{{ $property->owner->phone }}</td>
+
+                    <td>{{ $task->assignee }}</td>
+
+                    <td>{{ \Carbon\Carbon::parse($task->created_at)->isoFormat('ll') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($task->due_date)->isoFormat('ll') }}</td>
+
+                    <td>
+                        {{ Str::limit($task->task_description, 60, "...") }}
+                    </td>
+
                     <td>
                         <div class="dropdown">
                             <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -65,19 +68,19 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.units.show', $property->id) }}">
+                                    <a class="dropdown-item" href="{{ route('admin.tasks.show', $task->id) }}">
                                         <button>View</button>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.units.edit', $property->id) }}">
+                                    <a class="dropdown-item" href="{{ route('admin.tasks.edit', $task->id) }}">
                                         <button>Update</button>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <form class="dropdown-item" action="{{ route('admin.units.delete', $property->id) }}" method="POST"
+                                    <form class="dropdown-item" action="{{ route('admin.tasks.delete', $task->id) }}" method="POST"
                                         onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
                                       @csrf
                                       @method('DELETE')
@@ -89,6 +92,7 @@
                             </ul>
                         </div>
                     </td>
+
                 </tr>
                 @endforeach
             </tbody>
@@ -96,7 +100,7 @@
     </div>
 
     <div class="float-end">
-        {{ $units->links() }}
+        {{ $tasks->links() }}
     </div>
 
 </div>

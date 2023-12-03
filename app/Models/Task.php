@@ -26,4 +26,13 @@ class Task extends Model
     function tenant() {
         return $this->hasOne(Tenant::class, "id", "tenant_id");
     }
+
+    function getAssigneeAttribute() {
+        if (!is_null($this->tenant_id)) {
+            return $this->tenant->name;
+        }else{
+            return $this->user->name;
+        }
+    }
+
 }

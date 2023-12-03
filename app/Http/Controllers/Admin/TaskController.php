@@ -14,29 +14,35 @@ use Illuminate\Validation\Rule;
 class TaskController extends Controller
 {
     use ResultNotification;
-    
-    function index(){
-        return view('admin.tasks.index');
+
+    function index()
+    {
+        $tasks = Task::with(['tenant', 'user'])->latest()->paginate(config('app.per_page_items'));
+        return view('admin.tasks.index', compact('tasks'));
     }
 
-    function create() {
-        $properties = Property::with(['owner', 'tenant'])->all();
+    function create()
+    {
+        $properties = Property::with(['owner', 'tenant'])->get();
         return view('admin.tasks.create', compact('properties'));
     }
 
-    function show($id) {
+    function show($id)
+    {
         $task = Task::with(['user', 'tenant'])->findOrFail($id);
         return view('admin.tasks.show', compact('task'));
     }
 
-    function edit($id)  {
+    function edit($id)
+    {
         $task = Task::with(['user', 'tenant'])->findOrFail($id);
         $statuses = TaskStatus::cases();
         return view('admin.tasks.edit', compact('task', 'statuses'));
     }
 
-    function store(Request $request) {
-        
+    function store(Request $request)
+    {
+
         if (!isset($request->assignee)) {
             $this->errorNotification("Task assignee is required");
             return redirect()->route('admin.tasks.index');
@@ -52,9 +58,9 @@ class TaskController extends Controller
 
         if ($assignee == "user") {
             $rules['user_id'] = 'required|exists:users,id';
-        }else if ($assignee == "tenant") {
+        } else if ($assignee == "tenant") {
             $rules['tenant_id'] = 'required|exists:tenants,id';
-        }else{
+        } else {
             $this->errorNotification("Assignee is invalid");
             return redirect()->route('admin.tasks.index');
         }
@@ -68,7 +74,7 @@ class TaskController extends Controller
         $validated = $validator->validated();
 
         $additional_values = [
-            'status' => TaskStatus::TakenBy 
+            'status' => TaskStatus::TakenBy
         ];
 
         $validated['due_date'] = \Carbon\Carbon::parse($validated['due_date']);
@@ -79,20 +85,20 @@ class TaskController extends Controller
             Task::create($values);
             $this->successNotification("Task created successfully");
         } catch (\Exception $e) {
-            info("TASK CONTROLLER => STORE : ".$e->getMessage());
+            info("TASK CONTROLLER => STORE : " . $e->getMessage());
             $this->successNotification("Something went wrong, please try again later");
         }
 
         return redirect()->route('admin.tasks.index');
-
     }
 
-    function update(Request $request, $id) {
+    function update(Request $request, $id)
+    {
         $task = Task::findOrFail($id);
 
-        $statuses = array_map(function($status){
+        $statuses = array_map(function ($status) {
             return $status->value;
-        }, TaskStatus::cases()); 
+        }, TaskStatus::cases());
 
         $validator = Validator::make($request->all(), [
             'status' => ['required', Rule::in($statuses)]
@@ -113,21 +119,19 @@ class TaskController extends Controller
         }
 
         return redirect()->route('admin.tasks.index');
-
     }
 
-    function delete($id) {
+    function delete($id)
+    {
         $task = Task::findOrFail($id);
 
         if ($task->status == TaskStatus::Draft->value) {
             $task->delete();
             $this->successNotification("Task removed successfully");
-        }else{
+        } else {
             $this->errorNotification("Task cannot be deleted");
         }
 
         return redirect()->route('admin.tasks.index');
     }
-
-    
 }
