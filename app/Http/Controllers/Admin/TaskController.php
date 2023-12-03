@@ -23,8 +23,16 @@ class TaskController extends Controller
 
     function create()
     {
-        $properties = Property::with(['owner', 'tenant'])->get();
-        return view('admin.tasks.create', compact('properties'));
+        $property_id = request('unit');
+
+        if (!isset($property_id)) {
+            $properties = Property::with('owner')->get();
+            return view('admin.tasks.create', compact('properties'));
+        }
+
+        $property = Property::where(['id' => $property_id])->with(['tenant', 'owner'])->firstOrFail();
+
+        return view('admin.tasks.create', compact('property'));
     }
 
     function show($id)
@@ -45,7 +53,7 @@ class TaskController extends Controller
 
         if (!isset($request->assignee)) {
             $this->errorNotification("Task assignee is required");
-            return redirect()->route('admin.tasks.index');
+            return redirect()->route('admin.tasks.create');
         }
 
         $assignee = $request->assignee;
@@ -53,7 +61,7 @@ class TaskController extends Controller
         $rules = [
             'property_id' => 'required|exists:properties,id',
             'task_description' => 'required|max:4000',
-            'due_date' => 'required|date',
+            'due_date' => 'required',
         ];
 
         if ($assignee == "user") {
@@ -65,7 +73,7 @@ class TaskController extends Controller
             return redirect()->route('admin.tasks.index');
         }
 
-        $validator = Validator::make($request->all, $rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return back()->withErrors($validator);
