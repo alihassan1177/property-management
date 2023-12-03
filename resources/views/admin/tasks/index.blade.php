@@ -31,6 +31,7 @@
                     <th scope="col">Assignee</th>
                     <th scope="col">Assigned Date</th>
                     <th scope="col">Due Date</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Task Description</th>
                 </tr>
             </thead>
@@ -55,6 +56,7 @@
 
                     <td>{{ \Carbon\Carbon::parse($task->created_at)->isoFormat('ll') }}</td>
                     <td>{{ \Carbon\Carbon::parse($task->due_date)->isoFormat('ll') }}</td>
+                    <td>{{ strtoupper(str_replace("_", " ", $task->status))  }}</td>
 
                     <td>
                         {{ Str::limit($task->task_description, 60, "...") }}

@@ -12,7 +12,6 @@
 
 
 @if (!is_null(request('unit')))
-
 <div class="bg-light p-4 rounded">
     <form method="POST" action="{{ route('admin.tasks.store') }}">
         @csrf
