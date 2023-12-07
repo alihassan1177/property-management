@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Property;
 use App\Notifications\TaskCreated;
+use App\Notifications\TaskRemoved;
+use App\Notifications\TaskUpdated;
 use App\Traits\ResultNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
@@ -92,7 +94,7 @@ class TaskController extends Controller
         $values = array_merge($validated, $additional_values);
 
         try {
-            
+
             $task = Task::create($values);
             $this->successNotification("Task created successfully");
 
@@ -131,8 +133,18 @@ class TaskController extends Controller
         $validated = $validator->validated();
 
         try {
+
             $task->update($validated);
             $this->successNotification("Task updated successfully");
+
+            if ($task->tenant_id != null) {
+                $receiver = $task->tenant;
+            }else{
+                $receiver = $task->user;
+            }
+
+            Notification::send($receiver, new TaskUpdated());
+
         } catch (\Exception $e) {
             info("TASK CONTROLLER => UPDATE : " . $e->getMessage());
             $this->errorNotification("Something went wrong, please try again later");
@@ -148,6 +160,14 @@ class TaskController extends Controller
         if ($task->status == TaskStatus::Draft->value) {
             $task->delete();
             $this->successNotification("Task removed successfully");
+            
+            if ($task->tenant_id != null) {
+                $receiver = $task->tenant;
+            }else{
+                $receiver = $task->user;
+            }
+
+            Notification::send($receiver, new TaskRemoved());
         } else {
             $this->errorNotification("Task cannot be deleted");
         }
