@@ -6,8 +6,10 @@ use App\Enums\TaskStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Property;
+use App\Notifications\TaskCreated;
 use App\Traits\ResultNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -90,11 +92,21 @@ class TaskController extends Controller
         $values = array_merge($validated, $additional_values);
 
         try {
-            Task::create($values);
+            
+            $task = Task::create($values);
             $this->successNotification("Task created successfully");
+
+            if ($assignee == "user") {
+                $receiver = $task->user;            
+            }else{
+                $receiver = $task->tenant;
+            }
+
+            Notification::send($receiver, new TaskCreated());
+
         } catch (\Exception $e) {
             info("TASK CONTROLLER => STORE : " . $e->getMessage());
-            $this->successNotification("Something went wrong, please try again later");
+            $this->errorNotification("Something went wrong, please try again later");
         }
 
         return redirect()->route('admin.tasks.index');
