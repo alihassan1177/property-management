@@ -30,7 +30,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-xl-2 sidebar">
+            <div class="col-lg-3 col-xl-2 sidebar bg-white">
                 @include('layouts.admin.includes._sidebar')
             </div>
             <div class="col-lg-9 col-xl-10 content">

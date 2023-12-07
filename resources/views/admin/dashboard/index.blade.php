@@ -5,47 +5,60 @@
 @section('content')
 
 <div class="row mt-4">
+    
     <div class="col-lg-3 col-md-6 col-sm-12">
-        <p class="text-tertiary fs-6 fw-bold text-center">Revenue</p>
-        <div class="d-flex align-items-center justify-content-between">
-            <span>This Month</span>
-            <span class="btn btn-sm btn-outline-success">
-                $34,000
-            </span>
+        <div class="bg-white p-3 rounded shadow-sm">
+            <p class="text-tertiary fs-6 fw-bold text-center">Revenue</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <span>This Month</span>
+                <span class="btn btn-sm btn-outline-success">
+                    $34,000
+                </span>
+            </div>
         </div>
     </div>
+
     <div class="col-lg-3 col-md-6 col-sm-12">
-        <p class="text-tertiary fs-6 fw-bold text-center">Tenants</p>
-        <div class="d-flex align-items-center justify-content-between">
-            <span>This Month</span>
-            <span class="btn btn-sm btn-outline-info">
-                34
-            </span>
+        <div class="bg-white p-3 rounded shadow-sm">
+            <p class="text-tertiary fs-6 fw-bold text-center">Tenants</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <span>This Month</span>
+                <span class="btn btn-sm btn-outline-info">
+                    34
+                </span>
+            </div>
         </div>
     </div>
+
     <div class="col-lg-3 col-md-6 col-sm-12">
-        <p class="text-tertiary fs-6 fw-bold text-center">Units</p>
-        <div class="d-flex align-items-center justify-content-between">
-            <span>This Month</span>
-            <span class="btn btn-sm btn-outline-success">
-                0
-            </span>
+        <div class="bg-white p-3 rounded shadow-sm">
+            <p class="text-tertiary fs-6 fw-bold text-center">Units</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <span>This Month</span>
+                <span class="btn btn-sm btn-outline-success">
+                    0
+                </span>
+            </div>
         </div>
     </div>
+
     <div class="col-lg-3 col-md-6 col-sm-12">
-        <p class="text-tertiary fs-6 fw-bold text-center">Contracts</p>
-        <div class="d-flex align-items-center justify-content-between">
-            <span>This Month</span>
-            <span class="btn btn-sm btn-outline-danger">
-                10
-            </span>
+        <div class="bg-white p-3 rounded shadow-sm">
+            <p class="text-tertiary fs-6 fw-bold text-center">Contracts</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <span>This Month</span>
+                <span class="btn btn-sm btn-outline-danger">
+                    10
+                </span>
+            </div>
         </div>
     </div>
+
 </div>
 
 <div class="row mt-4">
     <div class="col-xxl-9">
-        <div class="p-4">
+        <div class="p-3 bg-white rounded shadow-sm">
             <h3 class="section-title">Quote Preview</h3>
             <div class="progress-wrapper">
                 <div class="d-flex align-items-center justify-content-between">
@@ -113,7 +126,7 @@
         </div>
     </div>
     <div class="col-xxl-3">
-        <div class="p-4">
+        <div class="p-3 bg-white rounded shadow-sm">
             <h2 class="section-title text-center">Customer Preview</h2>
             <div class="circle-progress-wrapper">
                 <h2>25%</h2>
@@ -133,7 +146,7 @@
 
 <div class="row mt-4 g-5">
     <div class="col-xxl-6 col-12">
-        <div class="p-4">
+        <div class="p-3 bg-white rounded shadow-sm">
             <h3 class="section-title">Recent Invoices</h3>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
@@ -160,7 +173,7 @@
         </div>
     </div>
     <div class="col-xxl-6 col-12">
-        <div class="p-4">
+        <div class="p-3 bg-white rounded shadow-sm">
             <h3 class="section-title">Recent Contracts</h3>
             <div class="table-responsive">
                 <table class="table table-hover">
