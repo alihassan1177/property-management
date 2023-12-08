@@ -34,6 +34,16 @@
                 </tr>
             </thead>
             <tbody>
+
+
+                @if (!$tenants->count())
+                <tr>
+                    <td colspan="4">
+                        <p class="text-center m-0 py-3">No results found</p>
+                    </td>
+                </tr>
+                @endif
+
                 @foreach ($tenants as $tenant)
 
                 @php

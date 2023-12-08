@@ -8,4 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class AddressBook extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "email",
+        "phone",
+        "address"
+    ];
+
+    function getFormatedNameAttribute() {
+        return implode(",", json_decode($this->name));
+    }
+
+    function getFormatedEmailAttribute() {
+        return implode(",", json_decode($this->email));        
+    }
+
+    function getFormatedPhoneAttribute() {
+        return implode(",", json_decode($this->phone));        
+    }
 }

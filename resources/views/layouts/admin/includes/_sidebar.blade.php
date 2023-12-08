@@ -54,7 +54,7 @@
         </a>
     </li>
     <li>
-        <a href="">
+        <a class="@if(request()->routeIs('admin.address-book.*')) active @endif" href="{{ route('admin.address-book.index') }}">
             <i class="fa fa-user"></i>
             <span>Address Book</span>
         </a>

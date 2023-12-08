@@ -1,24 +1,24 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Task Management')
+@section('title', 'Address Book')
 
 @section('content')
 
 <div class="page-header">
     <div class="d-flex align-items-center">
-        <h3>Task Management</h3>
+        <h3>Address Book</h3>
     </div>
 </div>
 
 <div class="bg-white shadow-sm p-4 rounded">
     <div class="d-flex align-items-center justify-content-between mb-5">
-        <h4 class="m-0">All Task</h4>
+        <h4 class="m-0">All Entries</h4>
         <div class="d-flex gap-3">
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <a href="{{ route('admin.tasks.create') }}" class="btn btn-primary">
-                Add new Task
+            <a href="{{ route('admin.address-book.create') }}" class="btn btn-primary">
+                Add new Entry
             </a>
         </div>
     </div>
@@ -28,40 +28,34 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Assignee</th>
-                    <th scope="col">Assigned Date</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Task Description</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Visit Date</th>
                 </tr>
             </thead>
             <tbody>
-                @if (!$tasks->count())
+                @if (!$entries->count())
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <p class="text-center m-0 py-3">No results found</p>
                     </td>
                 </tr>
                 @endif
 
-                @foreach ($tasks as $task)
+                @foreach ($entries as $addressBook)
+
                 @php
-                $row = ($tasks ->currentpage() - 1) * $tasks ->perpage() + $loop->index + 1;
+                $row = ($entries ->currentpage() - 1) * $entries ->perpage() + $loop->index + 1;
                 @endphp
 
                 <tr>
                     <th scope="row">{{ $row }}</th>
-
-                    <td>{{ $task->assignee }}</td>
-
-                    <td>{{ \Carbon\Carbon::parse($task->created_at)->isoFormat('ll') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($task->due_date)->isoFormat('ll') }}</td>
-                    <td>{{ strtoupper(str_replace("_", " ", $task->status))  }}</td>
-
-                    <td>
-                        {{ Str::limit($task->task_description, 60, "...") }}
-                    </td>
-
+                    <td>{{ $addressBook->formated_name }}</td>
+                    <td>{{ $addressBook->formated_email }}</td>
+                    <td>{{ $addressBook->formated_phone }}</td>
+                    <td>{{ \Carbon\Carbon::parse($addressBook->created_at)->isoFormat('ll') }}</td>
+                   
                     <td>
                         <div class="dropdown">
                             <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -69,20 +63,21 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <ul class="dropdown-menu">
+
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.tasks.show', $task->id) }}">
+                                    <a class="dropdown-item" href="{{ route('admin.address-book.show', $addressBook->id) }}">
                                         <button>View</button>
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('admin.tasks.edit', $task->id) }}">
+                                {{-- <li>
+                                    <a class="dropdown-item" href="{{ route('admin.units.edit', $property->id) }}">
                                         <button>Update</button>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <form class="dropdown-item" action="{{ route('admin.tasks.delete', $task->id) }}" method="POST"
+                                    <form class="dropdown-item" action="{{ route('admin.units.delete', $property->id) }}" method="POST"
                                         onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
                                       @csrf
                                       @method('DELETE')
@@ -90,19 +85,21 @@
                                         Delete
                                     </button>
                                   </form>
-                                </li>
+                                </li> --}}
+
                             </ul>
                         </div>
                     </td>
-
                 </tr>
                 @endforeach
+
+
             </tbody>
         </table>
     </div>
 
     <div class="float-end">
-        {{ $tasks->links() }}
+        {{ $entries->links() }}
     </div>
 
 </div>

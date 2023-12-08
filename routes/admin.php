@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AddressBookController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FinancialTrackingController;
@@ -26,6 +27,13 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/edit/{id}', [UnitController::class, 'edit'])->name('units.edit');
         Route::post('/update/{id}', [UnitController::class, 'update'])->name('units.update');
         Route::delete('/delete/{id}', [UnitController::class, 'delete'])->name('units.delete');
+    });
+
+    Route::group(['prefix' => 'address-book'], function () {
+        Route::get('/', [AddressBookController::class, 'index'])->name('address-book.index');
+        Route::get('/create', [AddressBookController::class, 'create'])->name('address-book.create');
+        Route::post('/store', [AddressBookController::class, 'store'])->name('address-book.store');
+        Route::get('/show/{id}', [AddressBookController::class, 'show'])->name('address-book.show');
     });
 
     Route::get('/financial-tracking', [FinancialTrackingController::class, 'index'])->name('financial-tracking.index');

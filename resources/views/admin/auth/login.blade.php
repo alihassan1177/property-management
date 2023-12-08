@@ -13,7 +13,7 @@
                 <span class="input-group-text">
                     <i class="fa fa-user"></i>
                 </span>
-                <input name="email" placeholder="admin@demo.com" type="text" class="form-control">
+                <input name="email" placeholder="admin@admin.com" type="text" class="form-control">
             </div>
             @error('email')
             <span class="text-danger">
@@ -26,10 +26,7 @@
                 <span class="input-group-text">
                     <i class="fa fa-lock"></i>
                 </span>
-                <input name="password" placeholder="admin123" type="password" class="form-control">
-                <button type="button" class="btn position-absolute top-0 bottom-0 end-0 password-toggle">
-                    <i id="icon" class="fa fa-eye-slash"></i>
-                </button>
+                <input name="password" placeholder="password" type="password" class="form-control">
             </div>
             @error('password')
             <span class="text-danger">

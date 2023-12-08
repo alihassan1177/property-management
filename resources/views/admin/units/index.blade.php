@@ -38,7 +38,7 @@
             <tbody>
                 @if (!$units->count())
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         <p class="text-center m-0 py-3">No results found</p>
                     </td>
                 </tr>

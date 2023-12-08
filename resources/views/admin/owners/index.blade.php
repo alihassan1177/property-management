@@ -40,7 +40,7 @@
 
                 @if (!$owners->count())
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <p class="text-center m-0 py-3">No results found</p>
                     </td>
                 </tr>
