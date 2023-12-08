@@ -180,3 +180,12 @@ a.btn{
     place-items: center;
     min-height: 100vh;
 }
+
+.avatar img {
+    max-width: 40px;
+}
+
+.avatar .btn.btn-secondary {
+    padding: 0px;
+    border: none;
+}

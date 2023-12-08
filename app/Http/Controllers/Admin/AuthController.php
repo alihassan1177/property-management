@@ -20,4 +20,9 @@ class AuthController extends Controller
             return back();
         }
     }
+
+    function logout() {
+        auth('admin')->logout();
+        return redirect()->route('admin.login');
+    }
 }

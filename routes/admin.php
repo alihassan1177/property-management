@@ -17,6 +17,9 @@ Route::group(['middleware' => ['guest'], 'as' => 'admin.'], function () {
 });
 
 Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], function () {
+
+    Route::post('/logout', [AuthController::class, "logout"])->name('logout');
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::group(['prefix' => 'units'], function () {
