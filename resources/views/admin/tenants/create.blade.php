@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="bg-light p-4 rounded">
+<div class="bg-white shadow-sm p-4 rounded">
 
     <form action="{{ route('admin.tenants.store') }}" class="row g-3" method="post">
         @csrf

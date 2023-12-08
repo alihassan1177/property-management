@@ -11,7 +11,7 @@
 </div>
 
 
-<div class="bg-light p-4 rounded">
+<div class="bg-white p-4 rounded shadow-sm">
 
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h4 class="m-0">All Owners</h4>

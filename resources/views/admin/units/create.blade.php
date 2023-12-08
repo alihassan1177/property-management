@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="bg-light p-4 rounded">
+<div class="bg-white shadow-sm p-4 rounded">
     <form method="POST" action="{{ route('admin.units.store') }}">
         @csrf
         <div class="d-flex align-items-center justify-content-between mb-5">

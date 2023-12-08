@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="bg-light p-4 rounded">
+<div class="bg-white shadow-sm p-4 rounded">
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h4 class="m-0">All Units</h4>
         <div class="d-flex gap-3">

@@ -11,7 +11,7 @@
 </div>
 
 
-<div class="bg-light p-4 rounded">
+<div class="bg-white shadow-sm p-4 rounded">
 
     <div class="row">
         <div class="col-lg-6">

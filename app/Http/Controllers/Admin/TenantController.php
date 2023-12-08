@@ -43,7 +43,7 @@ class TenantController extends Controller
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator);
+            return back()->withErrors($validator)->withInput();
         }
 
         $validated = $validator->validated();

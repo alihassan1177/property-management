@@ -4,9 +4,9 @@
 
 @section('content')
 
-<div class="row mt-4">
+<div class="row gy-5">
     
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
         <div class="bg-white p-3 rounded shadow-sm">
             <p class="text-tertiary fs-6 fw-bold text-center">Revenue</p>
             <div class="d-flex align-items-center justify-content-between">
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
         <div class="bg-white p-3 rounded shadow-sm">
             <p class="text-tertiary fs-6 fw-bold text-center">Tenants</p>
             <div class="d-flex align-items-center justify-content-between">
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
         <div class="bg-white p-3 rounded shadow-sm">
             <p class="text-tertiary fs-6 fw-bold text-center">Units</p>
             <div class="d-flex align-items-center justify-content-between">
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
         <div class="bg-white p-3 rounded shadow-sm">
             <p class="text-tertiary fs-6 fw-bold text-center">Contracts</p>
             <div class="d-flex align-items-center justify-content-between">
@@ -56,7 +56,7 @@
 
 </div>
 
-<div class="row mt-4">
+<div class="row mt-2 gy-5">
     <div class="col-xxl-9">
         <div class="p-3 bg-white rounded shadow-sm">
             <h3 class="section-title">Quote Preview</h3>
@@ -144,7 +144,7 @@
     </div>
 </div>
 
-<div class="row mt-4 g-5">
+<div class="row mt-2 gy-5">
     <div class="col-xxl-6 col-12">
         <div class="p-3 bg-white rounded shadow-sm">
             <h3 class="section-title">Recent Invoices</h3>
