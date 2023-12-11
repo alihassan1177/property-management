@@ -57,16 +57,26 @@
                     <td>{{ $tenant->phone }}</td>
                     <td>
                         <div class="dropdown">
-                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('admin.tenants.show', $tenant->id) }}">View</a></li>
+                                <li>
+                                    <form class="dropdown-item"
+                                        action="{{ route('admin.tenants.delete', $tenant->id) }}" method="POST"
+                                        onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
-                        </div>                        
+                        </div>
                     </td>
                 </tr>
                 @endforeach

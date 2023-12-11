@@ -30,14 +30,14 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-xl-2 sidebar bg-white">
+            <div class="col-lg-3 col-xl-2 sidebar bg-white shadow-sm">
                 @include('layouts.admin.includes._sidebar')
             </div>
             <div class="col-lg-9 col-xl-10 content">
                 <div class="topbar d-flex justify-content-end">
                     @include('layouts.admin.includes._topbar')
                 </div>
-                <div class="container-lg">
+                <div class="container-lg pb-5">
                     @include('layouts.admin.includes._result-notifications')
                     @yield('content')
                 </div>

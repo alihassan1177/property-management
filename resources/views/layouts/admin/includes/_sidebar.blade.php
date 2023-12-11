@@ -36,6 +36,13 @@
     </li>
 
     <li>
+        <a class="@if(request()->routeIs('admin.contracts.*')) active @endif" href="{{ route('admin.contracts.index') }}">
+            <i class="fa fa-file"></i>
+            <span>Contracts</span>
+        </a>
+    </li>
+
+    <li>
         <a class="@if(request()->routeIs('admin.financial-tracking.index')) active @endif" href="{{ route('admin.financial-tracking.index') }}">
             <i class="fa fa-file"></i>
             <span>Financial Tracking</span>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AddressBookController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FinancialTrackingController;
 use App\Http\Controllers\Admin\OwnerController;
@@ -41,10 +42,16 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
 
     Route::get('/financial-tracking', [FinancialTrackingController::class, 'index'])->name('financial-tracking.index');
 
+    Route::group(['prefix' => 'contracts'], function () {
+        Route::get('/', [ContractController::class, 'index'])->name('contracts.index');
+    });    
+
     Route::group(['prefix' => 'tenants'], function () {
         Route::get('/', [TenantController::class, 'index'])->name('tenants.index');
         Route::get('/create', [TenantController::class, 'create'])->name('tenants.create');
         Route::post('/store', [TenantController::class, 'store'])->name('tenants.store');
+        Route::get('/show/{id}', [TenantController::class, 'show'])->name('tenants.show');
+        Route::delete('/delete/{id}', [TenantController::class, 'delete'])->name('tenants.delete');
     });
 
     Route::group(['prefix' => 'owners'], function () {

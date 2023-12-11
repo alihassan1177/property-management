@@ -11,9 +11,26 @@
 </div>
 
 <div class="bg-white shadow-sm p-4 rounded">
-
+    
+    @if (!isset($property))
+    <ul>
+    @foreach ($units as $property)
+        <li>
+            <a href="{{ route('admin.tenants.create', ['property_id' => $property->id]) }}">
+                {{ $property->id . ". ".$property->cadastral_number . " : " . $property->address }}
+            </a>
+        </li>
+    @endforeach    
+    </ul>
+    @else
     <form action="{{ route('admin.tenants.store') }}" class="row g-3" method="post">
         @csrf
+
+        <input type="text" value="{{ $property->id }}" name="property_id" hidden>
+    
+        <div class="col-12">
+            <h5>Tenant Info</h5>
+        </div>
         
         <div class="col-12">
             <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
@@ -48,34 +65,58 @@
         </div>
 
         <div class="col-12">
-            <label for="property_id" class="form-label">Property <span class="text-danger">*</span></label>
-            <select style="width: 100%" name="property_id" id="property_id">
-                @foreach ($units as $property)
-                    <option value="{{ $property->id }}">{{ $property->cadastral_number . " : " . $property->address }}</option>
-                @endforeach
-            </select>
-            @error('property_id')
+            <hr>
+        </div>
+
+        <div class="col-12">
+            <h5>Contract Info</h5>
+        </div>
+
+        <div class="col-12">
+            <label for="late_fee_charges" class="form-label">Late fee charges <span class="text-danger">*</span></label>
+            <input type="number" value="{{ old('late_fee_charges') }}" class="form-control" placeholder="Enter tenant late fee charges" name="late_fee_charges" id="late_fee_charges">
+            @error('late_fee_charges')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
+
+        <div class="col-12">
+            <label for="early_termination_fee_amount" class="form-label">Early termination fee <span class="text-danger">*</span></label>
+            <input type="number" value="{{ old('early_termination_fee_amount') }}" class="form-control" placeholder="Enter tenant early termination fee" name="early_termination_fee_amount" id="early_termination_fee_amount">
+            @error('early_termination_fee_amount')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        @if (isset($property))            
+        <div class="col-12">
+            <div class="mb-3">
+                <div class="d-flex gap-4 align-items-center justify-content-between">
+                    <p class="m-0">Rent Amount: {{ $property->rent_amount }}$</p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="d-flex gap-4 align-items-center justify-content-between">
+                    <p class="m-0">Security Deposit: {{ $property->security_deposit }}$</p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="d-flex gap-4 align-items-center justify-content-between">
+                    <p class="m-0">Rental Period: {{ $property->rental_period }} months</p>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
 
     </form>
+    @endif
+
 </div>
-
-@endsection
-
-@section('scripts')
-
-<script>
-    $(function(){
-        $("#property_id").select2({
-            width : "style"
-        })
-    })
-</script>
 
 @endsection
