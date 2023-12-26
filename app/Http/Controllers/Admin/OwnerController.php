@@ -35,7 +35,9 @@ class OwnerController extends Controller
             [
                 'name' => 'required|min:6|max:128',
                 'email' => 'required|email|unique:users,email|max:256',
-                'phone' => 'required|min:11|max:11|unique:users,phone'
+                'phone' => 'required|min:11|max:11|unique:users,phone',
+                'address' => 'required|min:10|max:2000',
+                'bank_number' => 'required|min:10|max:50|unique:users,bank_number'
             ]
         );
 
@@ -51,7 +53,9 @@ class OwnerController extends Controller
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
                 'user_type' => UserType::Owner,
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
+                'address' => $validated['address'],
+                'bank_number' => $validated['bank_number']
             ]);
 
             $this->successNotification('New Owner added successfully');

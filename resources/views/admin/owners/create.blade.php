@@ -41,6 +41,23 @@
         </div>
 
         <div class="col-12">
+            <label for="bank_number" class="form-label">Bank Number <span class="text-danger">*</span></label>
+            <input type="text" value="{{ old('bank_number') }}" class="form-control" placeholder="Enter owner bank number" name="bank_number" id="bank_number">
+            @error('bank_number')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="col-12">
+            <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
+            <input type="text" value="{{ old('address') }}" class="form-control" placeholder="Enter owner address" name="address" id="address">
+            @error('address')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+
+        <div class="col-12">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
 

@@ -22,14 +22,32 @@ class Property extends Model
         'rent_amount',
         'status',
         'owner_id',
-        'tenant_id'
+        'tenant_id',
+        "manager_id",
+        "terms_of_agreement",
+        "energy_performance_certificate",
+        "living_area",
+        "inventory_report",
+        "electricity_information",
+        "gas_information",
+        "water_information",
+        "internet_information",
+        "key_information",
+        "additional_notes"
     ];
 
-    function owner() {
+    function owner()
+    {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }
 
-    function tenant() {
+    function manager()
+    {
+        return $this->belongsTo(User::class, 'manager_id', 'id');
+    }
+
+    function tenant()
+    {
         return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
     }
 }
