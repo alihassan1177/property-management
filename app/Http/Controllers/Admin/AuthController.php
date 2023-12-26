@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ResultNotification;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    use ResultNotification;
+
     function loginView()
     {
         return view('admin.auth.login');
@@ -17,6 +20,7 @@ class AuthController extends Controller
         if (auth()->guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('admin.dashboard.index');
         } else {
+            $this->errorNotification("User credentials not correct");
             return back();
         }
     }
