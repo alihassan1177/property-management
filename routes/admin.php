@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FinancialTrackingController;
 use App\Http\Controllers\Admin\OwnerController;
+use App\Http\Controllers\Admin\ManagerController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\TaskController;
@@ -62,6 +63,16 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/edit/{id}', [OwnerController::class, 'edit'])->name('owners.edit');
         Route::post('/update/{id}', [OwnerController::class, 'update'])->name('owners.update');
         Route::delete('/delete/{id}', [OwnerController::class, 'delete'])->name('owners.delete');
+    });
+
+    Route::group(['prefix' => 'managers'], function () {
+        Route::get('/', [ManagerController::class, 'index'])->name('managers.index');
+        Route::get('/create', [ManagerController::class, 'create'])->name('managers.create');
+        Route::post('/store', [ManagerController::class, 'store'])->name('managers.store');
+        Route::get('/show/{id}', [ManagerController::class, 'show'])->name('managers.show');
+        Route::get('/edit/{id}', [ManagerController::class, 'edit'])->name('managers.edit');
+        Route::post('/update/{id}', [ManagerController::class, 'update'])->name('managers.update');
+        Route::delete('/delete/{id}', [ManagerController::class, 'delete'])->name('managers.delete');
     });
 
     Route::group(['prefix' => 'tasks'], function () {
