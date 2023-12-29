@@ -26,34 +26,73 @@ class UnitController extends Controller
     function create()
     {
         $owners = User::where(['user_type' => UserType::Owner])->latest()->get();
-        return view('admin.units.create', compact('owners'));
+        $managers = User::where(['user_type' => UserType::Manager])->latest()->get();
+        return view('admin.units.create', compact('owners', 'managers'));
     }
 
     function store(Request $request)
     {
+
+        // TODO : make cadastral number system generated
+
+        // dd(array_keys($request->all()));
+
+        $rules = [
+            "address" => "required",
+            "total_area" => "required",
+            "living_area" => "required",
+            "floors" => "required",
+            "number_of_beds" => "required",
+            "number_of_baths" => "required",
+            "owner_id" => "required|exists:users,id",
+            "tenancy_agreement_terms" => "required",
+            "additional_notes" => "nullable",
+            "rent_amount" => "required",
+            "security_deposit" => "required",
+            "rental_period" => "required",
+            "gas_information" => "nullable",
+            "gas_price" => "nullable",
+            "electricity_information" => "nullable",
+            "electricity_price" => "nullable",
+            "water_information" => "nullable",
+            "water_price" => "nullable",
+            "internet_information" => "nullable",
+            "internet_price" => "nullable",
+            "epc" => "required|mimes:pdf|max:10000",
+        ];
+
         $validator = Validator::make(
             $request->all(),
-            [
-                'address' => 'required|max:1000',
-                'rent_amount' => 'integer|required',
-                'number_of_beds' => 'integer|required',
-                'number_of_baths' => 'integer|required',
-                'total_area' => 'integer|required',
-                'cadastral_number' => 'required|min:6|max:30|unique:properties,cadastral_number',
-                'rental_period' => 'integer|required',
-                'security_deposit' => 'integer|required',
-                'floors' => 'integer|required',
-                'owner_id' => 'required|exists:users,id'
-            ]
+            $rules
         );
 
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
 
+        $file = $request->file('epc');
+        $filename = time() . "-" . strtolower(str_replace(" ", "-", $file->getClientOriginalName()));
+        $destinationPath = 'uploads';
+        $file->move($destinationPath, $filename);
+
         $validated = $validator->validated();
 
-        $additionalValues = ['status' => UnitStatus::Available];
+        $electricity_info = serialize(["info" => $validated["electricity_information"], "price" => $validated["electricity_price"]]);
+        $gas_info = serialize(["info" => $validated["gas_information"], "price" => $validated["gas_price"]]);
+        $water_info = serialize(["info" => $validated["water_information"], "price" => $validated["water_price"]]);
+        $internet_info = serialize(["info" => $validated["internet_information"], "price" => $validated["internet_price"]]);
+
+        $cadastral_number = "CAD" . time();
+
+        $additionalValues = [
+            'status' => UnitStatus::Available,
+            'electricity_information' => $electricity_info,
+            'gas_information' => $gas_info,
+            'water_information' => $water_info,
+            'internet_information' => $internet_info,
+            'energy_performance_certificate' => $filename,
+            'cadastral_number' => $cadastral_number
+        ];
 
         $values = array_merge($validated, $additionalValues);
 
@@ -69,7 +108,7 @@ class UnitController extends Controller
     }
 
     function edit($id)
-    {   
+    {
         $property = Property::where(['id' => $id])->firstOrFail();
         $owners = User::where(['user_type' => UserType::Owner])->get();
         return view('admin.units.edit', compact('property', 'owners'));
@@ -109,8 +148,7 @@ class UnitController extends Controller
             $this->errorNotification('Something went wrong, please try again later');
         }
 
-        return redirect()->route('admin.units.index');   
-
+        return redirect()->route('admin.units.index');
     }
 
     function show($id)
