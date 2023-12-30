@@ -1,5 +1,5 @@
-<div class="mt-3"></div>
 @if (Session::has('success'))
+<div class="mt-3"></div>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     {{ Session::get('success') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

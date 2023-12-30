@@ -26,6 +26,7 @@
 <body>
 
     <main class="auth-content-wrapper">
+        @include('layouts.tenant.includes._result-notifications')
         @yield('content')
     </main>
 

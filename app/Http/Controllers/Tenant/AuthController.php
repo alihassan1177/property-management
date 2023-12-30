@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ResultNotification;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    use ResultNotification;
 
     function loginView() {
         return view('tenant.auth.login');

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,19 +20,37 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     @yield('styles')
 </head>
-<body>
 
-    <main class="auth-content-wrapper">
-        @include('layouts.admin.includes._result-notifications')
-        @yield('content')
-    </main>
+<body class="bg-light">
 
-    <script src="{{ asset("assets/vendor/bootstrap/bootstrap.bundle.min.js") }}"></script>
-    <script src="{{ asset("assets/js/script.js") }}"></script>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-xl-2 sidebar bg-white shadow-sm">
+                @include('layouts.owner.includes._sidebar')
+            </div>
+            <div class="col-lg-9 col-xl-10 content">
+                <div class="topbar d-flex justify-content-end">
+                    @include('layouts.owner.includes._topbar')
+                </div>
+                <div class="container-lg pb-5">
+                    @include('layouts.owner.includes._result-notifications')
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+
     @yield('scripts')
 </body>
+
 </html>
