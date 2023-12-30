@@ -22,7 +22,48 @@
                 </button>
             </div>
         </div>
-    
+
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="form-label" for="key_date">Key Date</label>
+                <input class="form-control" type="date" name="key_date" id="key_date">
+                @error('key_date')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" for="reminder_date">Reminder Date</label>
+                <input class="form-control" type="date" name="reminder_date" id="reminder_date">
+                @error('reminder_date')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" for="key_date_description">Event</label>
+                <textarea name="key_date_description" class="form-control" id="key_date_description" cols="30" rows="10"></textarea>
+                @error('key_date_description')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" for="key_date">Property</label>
+                <select style="width: 100%" name="property_id" id="property_id">
+                    @foreach ($properties as $property)
+                        <option value="{{ $property->id }}">
+                            {{ $property->cadastral_number }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('property_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+        </div>
+
 
     </form>
 
@@ -34,7 +75,9 @@
 
 <script>
     $(function() {
-
+        $('#property_id').select2({
+            width : 'style'
+        })
     })
 </script>
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UnitStatus;
 use App\Http\Controllers\Controller;
 use App\Models\KeyDate;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class KeyDateController extends Controller
@@ -17,7 +19,8 @@ class KeyDateController extends Controller
 
     function create()
     {
-        return view('admin.keydates.create');
+        $properties = Property::where(['status' => UnitStatus::OnRent])->get();
+        return view('admin.keydates.create', compact('properties'));
     }
 
     function store(Request $request)
