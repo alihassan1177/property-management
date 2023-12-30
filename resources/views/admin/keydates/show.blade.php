@@ -33,12 +33,6 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <div class="d-flex gap-4 align-items-center justify-content-between">
-                    <p class="m-0">Propert Cadastral Number: {{ $keydate->property->cadastral_number }}</p>
-                </div>
-            </div>
-
             <hr class="my-5">
 
             <h5 class="text-uppercase text-primary">
@@ -48,6 +42,43 @@
             <p>
                 {{ $keydate->key_date_description }}
             </p>
+
+            <hr class="my-5">
+
+            <h5 class="text-uppercase text-primary">
+                Property Information
+            </h5>
+
+            <div class="mb-3">
+                <div class="d-flex gap-4 align-items-center justify-content-between">
+                    <p class="m-0">Cadastral Number: {{ $keydate->property->cadastral_number }}</p>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <h5 class="text-uppercase text-primary">
+                Tenant Information
+            </h5>
+
+            <div class="mb-3">
+                <div class="d-flex gap-4 align-items-center justify-content-between">
+                    <p class="m-0">Name: {{ $keydate->tenant->name }}</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="d-flex gap-4 align-items-center justify-content-between">
+                    <p class="m-0">Phone: {{ $keydate->tenant->phone }}</p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="d-flex gap-4 align-items-center justify-content-between">
+                    <p class="m-0">Phone: {{ $keydate->tenant->email }}</p>
+                </div>
+            </div>
+
+
 
         </div>
 

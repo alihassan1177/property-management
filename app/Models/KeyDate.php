@@ -20,4 +20,8 @@ class KeyDate extends Model
     function property() {
         return $this->belongsTo(Property::class, "property_id", "id");
     }
+
+    function tenant() {
+        return $this->belongsTo(Tenant::class, "tenant_id", "id");
+    }
 }
