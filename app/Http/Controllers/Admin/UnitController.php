@@ -32,9 +32,6 @@ class UnitController extends Controller
 
     function store(Request $request)
     {
-
-        // TODO : make cadastral number system generated
-
         // dd(array_keys($request->all()));
 
         $rules = [

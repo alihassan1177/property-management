@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FinancialTrackingController;
+use App\Http\Controllers\Admin\KeyDateController;
 use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\ManagerController;
 use App\Http\Controllers\Admin\TenantController;
@@ -84,4 +85,16 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::post('/update/{id}', [TaskController::class, 'update'])->name('tasks.update');
         Route::delete('/delete/{id}', [TaskController::class, 'delete'])->name('tasks.delete');
     });
+
+    Route::group(['prefix' => 'keydates'], function () {
+        Route::get('/', [KeyDateController::class, 'index'])->name('keydates.index');
+        Route::get('/create', [KeyDateController::class, 'create'])->name('keydates.create');
+        Route::post('/store', [KeyDateController::class, 'store'])->name('keydates.store');
+        Route::get('/show/{id}', [KeyDateController::class, 'show'])->name('keydates.show');
+        Route::get('/edit/{id}', [KeyDateController::class, 'edit'])->name('keydates.edit');
+        Route::post('/update/{id}', [KeyDateController::class, 'update'])->name('keydates.update');
+        Route::delete('/delete/{id}', [KeyDateController::class, 'delete'])->name('keydates.delete');
+    });
+
+
 });

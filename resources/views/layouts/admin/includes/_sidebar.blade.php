@@ -61,7 +61,7 @@
         </a>
     </li>
     <li>
-        <a href="">
+        <a class="@if(request()->routeIs('admin.keydates.*')) active @endif" href="{{ route('admin.keydates.index') }}">
             <i class="fa fa-calendar"></i>
             <span>Key Dates</span>
         </a>
