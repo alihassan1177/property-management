@@ -1,5 +1,3 @@
-{{-- @dd($property->toArray()) --}}
-
 @extends('layouts.admin.master')
 
 @section('title', 'Key Date Details')

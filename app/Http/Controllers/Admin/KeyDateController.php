@@ -69,11 +69,36 @@ class KeyDateController extends Controller
     function edit($id)
     {
         $keydate = KeyDate::findOrFail($id);
-        return view('admin.keydates.edit', compact('keydate'));
+        $properties = Property::where(['status' => UnitStatus::OnRent])->get();
+        return view('admin.keydates.edit', compact('keydate', 'properties'));
     }
 
-    function update(Request $request)
+    function update(Request $request, $id)
     {
+
+        $keydate = KeyDate::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            "key_date" => "required|date",
+            "reminder_date" => "required|date",
+            "key_date_description" => "required|max:2000",
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            $keydate->update($validated);
+            $this->successNotification("Key date updated successfully");
+        } catch (\Exception $e) {
+            info("KEY DATE CONTROLLER => STORE : " . $e->getMessage());
+            $this->errorNotification("Something went wrong, please try again later");
+        }
+
+        return redirect()->route('admin.keydates.index');
     }
 
     function delete($id)
