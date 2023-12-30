@@ -16,4 +16,8 @@ class KeyDate extends Model
         "key_date",
         "reminder_date"
     ];
+
+    function property() {
+        return $this->belongsTo(Property::class, "property_id", "id");
+    }
 }

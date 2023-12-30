@@ -28,13 +28,16 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Key Date</th>
+                    <th scope="col">Reminder Date</th>
+                    <th scope="col">Event</th>
 
                 </tr>
             </thead>
             <tbody>
                 @if (!$keydates->count())
                 <tr>
-                    <td colspan="6">
+                    <td colspan="5">
                         <p class="text-center m-0 py-3">No results found</p>
                     </td>
                 </tr>
@@ -48,8 +51,10 @@
 
                 <tr>
                     <th scope="row">{{ $row }}</th>
-
-                    {{-- <td>
+                    <th scope="row">{{ $keydate->key_date }}</th>
+                    <th scope="row">{{ $keydate->reminder_date }}</th>
+                    <th scope="row">{{ Str::limit($keydate->key_date_description, 50, "...") }}</th>
+                    <td>
                         <div class="dropdown">
                             <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -57,19 +62,19 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.units.show', $property->id) }}">
+                                    <a class="dropdown-item" href="{{ route('admin.keydates.show', $keydate->id) }}">
                                         <button>View</button>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.units.edit', $property->id) }}">
+                                    <a class="dropdown-item" href="{{ route('admin.keydates.edit', $keydate->id) }}">
                                         <button>Update</button>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <form class="dropdown-item" action="{{ route('admin.units.delete', $property->id) }}" method="POST"
+                                    <form class="dropdown-item" action="{{ route('admin.keydates.delete', $keydate->id) }}" method="POST"
                                         onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
                                       @csrf
                                       @method('DELETE')
@@ -80,7 +85,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </td> --}}
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
