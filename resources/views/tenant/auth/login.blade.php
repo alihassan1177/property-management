@@ -1,12 +1,12 @@
-@extends('layouts.admin.auth')
+@extends('layouts.tenant.auth')
 
 @section('content')
 
 <div class="auth-form-wrapper">
     
-    <h2 class="fw-bold mb-4">Sign In</h2>
+    <h2 class="fw-bold mb-4">Tenant Sign In</h2>
 
-    <form method="POST" class="row g-3" action="{{ route('admin.login.attempt') }}" >
+    <form method="POST" class="row g-3" action="{{ route('tenant.login.attempt') }}" >
         @csrf
         <div class="col-12">
             <div class="input-group">
