@@ -27,6 +27,12 @@
             <span>Owners</span>
         </a>
     </li>
+    <li>
+        <a class="@if(request()->routeIs('admin.managers.*')) active @endif" href="{{ route('admin.managers.index') }}">
+            <i class="fa fa-users"></i>
+            <span>Managers</span>
+        </a>
+    </li>
 
     <li>
         <a class="@if(request()->routeIs('admin.tenants.*')) active @endif" href="{{ route('admin.tenants.index') }}">

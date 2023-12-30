@@ -32,7 +32,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
-                    <th scope="col">Unit Count</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +55,6 @@
                     <td>{{ $manager->name }}</td>
                     <td>{{ $manager->email }}</td>
                     <td>{{ $manager->phone }}</td>
-                    <td>{{ $manager->property_count }}</td>
                     <td>
                         <div class="dropdown">
                             <button class="btn-sm btn btn-secondary dropdown-toggle" type="button"

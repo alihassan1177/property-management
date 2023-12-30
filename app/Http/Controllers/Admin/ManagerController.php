@@ -29,6 +29,8 @@ class ManagerController extends Controller
 
     function store(Request $request)
     {
+
+        // dd($request->all());
         $validator = Validator::make(
             $request->all(),
             [
@@ -106,7 +108,7 @@ class ManagerController extends Controller
     function edit($id)
     {
         $manager = User::where(['user_type' => UserType::Manager, 'id' => $id])->firstOrFail();
-        return view('admin.ma$managers.edit', compact("manager"));
+        return view('admin.managers.edit', compact("manager"));
     }
 
     function delete($id){
