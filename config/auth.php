@@ -47,6 +47,10 @@ return [
         'tenant' => [
             'driver' => 'session',
             'provider' => 'tenants'
+        ],
+        'owner' => [
+            'driver' => 'session',
+            'provider' => 'owners'
         ]
     ],
 
@@ -79,6 +83,10 @@ return [
         'tenants' => [
             'driver' => 'eloquent',
             'model' => App\Models\Tenant::class,
+        ],
+        'owners' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
         ]
 
         // 'users' => [
