@@ -153,7 +153,7 @@ class UnitController extends Controller
 
     function show($id)
     {
-        $property = Property::with(['owner', 'tenant'])->findOrFail($id);
+        $property = Property::with(['owner', 'tenant', 'manager'])->findOrFail($id);
         return view('admin.units.show', compact('property'));
     }
 
