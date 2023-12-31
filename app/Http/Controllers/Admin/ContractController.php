@@ -18,4 +18,13 @@ class ContractController extends Controller
         )->latest()->paginate(config('app.per_page_items'));
         return view('admin.contracts.index', compact('contracts'));
     }
+
+    function show($id)
+    {
+        $contract = Contract::with([
+            'property' => ['owner'],
+            'tenant'
+        ])->findOrFail($id);
+        return view('admin.contracts.show', compact('contract'));
+    }
 }

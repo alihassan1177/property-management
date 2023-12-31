@@ -46,6 +46,7 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
 
     Route::group(['prefix' => 'contracts'], function () {
         Route::get('/', [ContractController::class, 'index'])->name('contracts.index');
+        Route::get('/show/{id}', [ContractController::class, 'show'])->name('contracts.show');
     });    
 
     Route::group(['prefix' => 'tenants'], function () {

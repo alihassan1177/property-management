@@ -62,17 +62,17 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                {{-- <li>
+                                <li>
                                     <a class="dropdown-item" href="{{ route('admin.contracts.show', $contract->id) }}">
                                         <button>View</button>
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a class="dropdown-item" href="{{ route('admin.contracts.edit', $contract->id) }}">
                                         <button>Update</button>
                                     </a>
-                                </li>
-                                <li>
+                                </li> --}}
+                                {{-- <li>
                                     <form class="dropdown-item"
                                         action="{{ route('admin.contracts.delete', $contract->id) }}" method="POST"
                                         onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
