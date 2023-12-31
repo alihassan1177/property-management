@@ -18,6 +18,12 @@ class Contract extends Model
         "end_date",
         "status",
         "rent_amount",
-        "security_deposit"
+        "security_deposit",
+        'document',
+        'contract_id',
+        'gas_information',
+        'water_information',
+        'internet_information',
+        'eletricity_information'
     ];
 }

@@ -13,17 +13,18 @@
 <div class="bg-white shadow-sm p-4 rounded">
     
     @if (!isset($property))
-    <ul>
+    <h2 class="h5 mb-2">Select Property</h2>
+    <ol>
     @foreach ($units as $property)
         <li>
             <a href="{{ route('admin.tenants.create', ['property_id' => $property->id]) }}">
-                {{ $property->id . ". ".$property->cadastral_number . " : " . $property->address }}
+                {{ $property->cadastral_number . " : " . $property->address }}
             </a>
         </li>
     @endforeach    
-    </ul>
+    </ol>
     @else
-    <form action="{{ route('admin.tenants.store') }}" class="row g-3" method="post">
+    <form enctype="multipart/form-data" action="{{ route('admin.tenants.store') }}" class="row g-3" method="post">
         @csrf
 
         <input type="text" value="{{ $property->id }}" name="property_id" hidden>
@@ -70,6 +71,23 @@
 
         <div class="col-12">
             <h5>Contract Info</h5>
+        </div>
+
+        <div class="col-12">
+            <label for="document" class="form-label">Document <span class="text-danger">*</span></label>
+            <input type="file" value="{{ old('document') }}" class="form-control" placeholder="Enter tenant Document" name="document" id="document">
+            @error('document')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="col-12">
+            <label for="start_date" class="form-label">Start Date <span class="text-danger">*</span></label>
+            <label for="start_date" class="form-label"><small>Contract's end date will be calculated according to rental period of property</small> </label>
+            <input type="date" value="{{ old('start_date') }}" class="form-control" placeholder="Enter tenant Start Date" name="start_date" id="start_date">
+            @error('start_date')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="col-12">
