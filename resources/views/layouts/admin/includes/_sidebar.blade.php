@@ -1,7 +1,7 @@
 <div class="logo-area">
 
     <div class="logo">
-        CRM
+        Admin
     </div>
     <button class="sidebar-toggler btn btn-lg">
         <i class="fa fa-bars"></i>
