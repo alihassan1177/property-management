@@ -24,6 +24,16 @@ class Contract extends Model
         'gas_information',
         'water_information',
         'internet_information',
-        'eletricity_information'
+        'electricity_information'
     ];
+
+
+    function tenant() {
+        return $this->belongsTo(Tenant::class, "tenant_id", "id");
+    }
+
+    function property() {
+        return $this->belongsTo(Property::class, "property_id", "id");
+    }
+
 }

@@ -29,14 +29,13 @@ class TenantController extends Controller
     function create()
     {
         $property_id = request('property_id');
-        if (!isset($property_id)) {            
+        if (!isset($property_id)) {
             $units = Property::where(['status' => UnitStatus::Available])->get();
             return view('admin.tenants.create', compact('units'));
         }
 
         $property = Property::findOrFail($property_id);
         return view('admin.tenants.create', compact('property'));
-        
     }
 
     function store(Request $request)
@@ -50,7 +49,9 @@ class TenantController extends Controller
                 'property_id' => 'required|exists:properties,id',
                 'address' => 'required|max:1000',
                 'late_fee_charges' => 'required|integer',
-                'early_termination_fee_amount' => 'required|integer'
+                'early_termination_fee_amount' => 'required|integer',
+                'document' => 'required|mimes:pdf|max:10000',
+                'start_date' => 'required'
             ]
         );
 
@@ -68,27 +69,41 @@ class TenantController extends Controller
         DB::beginTransaction();
 
         try {
+
+            $file = $request->file('document');
+            $filename = time() . "-" . strtolower(str_replace(" ", "-", $file->getClientOriginalName()));
+            $destinationPath = 'uploads';
+            $file->move($destinationPath, $filename);
+
             $values = array_merge($validated, $additional_values);
-            
+
             $property = Property::findOrFail($validated['property_id']);
 
             $tenant = Tenant::create($values);
-        
+
             $property->update([
                 'status' => UnitStatus::OnRent,
                 'tenant_id' => $tenant->id
             ]);
+
+            $contract_id = "CID" . time() + rand(1000, 9999);
 
             Contract::create([
                 "tenant_id" => $tenant->id,
                 "property_id" => $validated['property_id'],
                 "late_fee_amount" => $validated['late_fee_charges'],
                 "early_termination_fee_amount" => $validated['early_termination_fee_amount'],
-                "start_date" => Carbon::now(),
-                "end_date" => Carbon::now()->addMonths($property->rental_period),
+                "start_date" => $validated["start_date"],
+                "end_date" => Carbon::parse($validated["start_date"])->addMonths($property->rental_period),
                 "status" => ContractStatus::Valid,
                 "rent_amount" => $property->rent_amount,
-                "security_deposit" => $property->security_deposit
+                "security_deposit" => $property->security_deposit,
+                "document" => $filename,
+                "gas_information" => $property->gas_information,
+                "internet_information" => $property->internet_information,
+                "water_information" => $property->water_information,
+                "electricity_information" => $property->electricity_information,
+                "contract_id" => $contract_id,
             ]);
 
             DB::commit();
@@ -103,28 +118,29 @@ class TenantController extends Controller
         return redirect()->route('admin.tenants.index');
     }
 
-    function show($id) {
+    function show($id)
+    {
         $tenant = Tenant::with('property')->findOrFail($id);
         return view('admin.tenants.show', compact('tenant'));
     }
 
-    function delete($id) {
+    function delete($id)
+    {
         $tenant = Tenant::with('property')->findOrFail($id);
 
-        try {   
+        try {
             $tenant->property->update([
                 "tenant_id" => null,
                 "status" => UnitStatus::Available
             ]);
-    
+
             $tenant->delete();
             $this->successNotification("Tenant removed successfully");
         } catch (\Exception $e) {
-            info("TENANT CONTROLLER => DELETE : ". $e->getMessage());
+            info("TENANT CONTROLLER => DELETE : " . $e->getMessage());
             $this->errorNotification("Something went wrong, please try again later");
         }
 
         return redirect()->route('admin.tenants.index');
     }
-
 }

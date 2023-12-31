@@ -79,7 +79,7 @@ class UnitController extends Controller
         $water_info = serialize(["info" => $validated["water_information"], "price" => $validated["water_price"]]);
         $internet_info = serialize(["info" => $validated["internet_information"], "price" => $validated["internet_price"]]);
 
-        $cadastral_number = "CAD" . time();
+        $cadastral_number = "CAD" . time() + rand(1000, 9999);
 
         $additionalValues = [
             'status' => UnitStatus::Available,

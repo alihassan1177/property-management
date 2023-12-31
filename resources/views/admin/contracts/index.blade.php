@@ -24,11 +24,12 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Unit no</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Cadastral Number</th>
-                    <th scope="col">contract Name</th>
-                    <th scope="col">contract Phone</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Contract ID</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Owner Phone</th>
+                    <th scope="col">Tenant Phone</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,6 +50,11 @@
 
                 <tr>
                     <th scope="row">{{ $row }}</th>
+                    <th scope="row">{{ $contract->contract_id }}</th>
+                    <th scope="row">{{ \Carbon\Carbon::parse($contract->start_date)->isoFormat('LL') }}</th>
+                    <th scope="row">{{ \Carbon\Carbon::parse($contract->end_date)->isoFormat('LL') }}</th>
+                    <th scope="row">{{ $contract->tenant->phone }}</th>
+                    <th scope="row">{{ $contract->property->owner->phone }}</th>
                     <td>
                         <div class="dropdown">
                             <button class="btn-sm btn btn-secondary dropdown-toggle" type="button"
@@ -67,14 +73,15 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <form class="dropdown-item" action="{{ route('admin.contracts.delete', $contract->id) }}" method="POST"
+                                    <form class="dropdown-item"
+                                        action="{{ route('admin.contracts.delete', $contract->id) }}" method="POST"
                                         onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
-                                      @csrf
-                                      @method('DELETE')
-                                      <button type="submit">
-                                        Delete
-                                    </button>
-                                  </form>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">
+                                            Delete
+                                        </button>
+                                    </form>
                                 </li> --}}
                             </ul>
                         </div>
@@ -87,7 +94,7 @@
     </div>
 
     <div>
-       {{ $contracts->links() }}
+        {{ $contracts->links() }}
     </div>
 
 </div>
