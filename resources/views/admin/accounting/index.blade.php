@@ -17,7 +17,7 @@
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <a href="{{ route('admin.address-book.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.accounting.vat-management.create') }}" class="btn btn-primary">
                 Add new Entry
             </a>
         </div>

@@ -29,7 +29,7 @@
                 <div class="mb-3">
                     <div class="form-group">
                         <label class="form-label" for="vat_rates">Vat Rates</label>
-                        <input value="{{ old('vat_rates') }}" placeholder="Enter your Vat rates" type="number" id="vat_rates" vat_rates="vat_rates" class="form-control">
+                        <input value="{{ old('vat_rates') }}" placeholder="Enter your Vat rates" type="number" id="vat_rates" name="vat_rates" class="form-control">
                     </div>
                     @error('vat_rates')
                         <span class="text-danger">{{ $message }}</span>
@@ -62,3 +62,12 @@
 
 @endsection
 
+@section('scripts')
+
+<script>
+        $('#country_select').select2({
+            width : 'style'
+        })
+</script>
+
+@endsection
