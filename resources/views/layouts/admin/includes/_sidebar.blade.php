@@ -47,6 +47,12 @@
             <span>Contracts</span>
         </a>
     </li>
+    <li>
+        <a class="@if(request()->routeIs('admin.accounting.*')) active @endif" href="{{ route('admin.accounting.index') }}">
+            <i class="fa fa-file"></i>
+            <span>Accounting</span>
+        </a>
+    </li>
 
     <li>
         <a class="@if(request()->routeIs('admin.financial-tracking.index')) active @endif" href="{{ route('admin.financial-tracking.index') }}">

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Enums\UserType;
+use App\Models\Country;
 use App\Models\Property;
 use App\Traits\ResultNotification;
 use Illuminate\Support\Facades\Validator;
@@ -25,9 +26,10 @@ class UnitController extends Controller
 
     function create()
     {
+        $countries = Country::all();
         $owners = User::where(['user_type' => UserType::Owner])->latest()->get();
         $managers = User::where(['user_type' => UserType::Manager])->latest()->get();
-        return view('admin.units.create', compact('owners', 'managers'));
+        return view('admin.units.create', compact('owners', 'managers', 'countries'));
     }
 
     function store(Request $request)
@@ -56,6 +58,7 @@ class UnitController extends Controller
             "internet_information" => "nullable",
             "internet_price" => "nullable",
             "epc" => "required|mimes:pdf|max:10000",
+            "country_id" => "required|exists:countries,id"
         ];
 
         $validator = Validator::make(

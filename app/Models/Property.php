@@ -33,8 +33,13 @@ class Property extends Model
         "water_information",
         "internet_information",
         "key_information",
-        "additional_notes"
+        "additional_notes",
+        "country_id"
     ];
+
+    function country() {
+        return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
 
     function owner()
     {

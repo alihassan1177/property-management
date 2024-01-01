@@ -91,6 +91,20 @@
                 </div>
 
                 <hr class="my-4">
+                <h5 class="text-uppercase text-primary">
+                    Country
+                </h5>
+                <select id="country_select" style="width: 100%" name="country_id">
+                    @foreach ($countries as $country)
+                        <option value="{{ $country->id }}">{{ $loop->iteration . ". " . $country->name }}</option>
+                    @endforeach
+                </select>
+                @error('country_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+
+
+                <hr class="my-4">
 
                 <h5 class="text-uppercase text-primary">
                     Owner information
@@ -290,7 +304,12 @@
         $('#owner_select').select2({
             width : 'style'
         })
+
         $('#manager_select').select2({
+            width : 'style'
+        })
+
+        $('#country_select').select2({
             width : 'style'
         })
     })

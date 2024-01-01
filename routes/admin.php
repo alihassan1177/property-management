@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountingController;
 use App\Http\Controllers\Admin\AddressBookController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContractController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\Admin\ManagerController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\TaskController;
-
+use App\Http\Controllers\Admin\VatController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest:admin'], 'as' => 'admin.'], function () {
@@ -43,6 +44,15 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
     });
 
     Route::get('/financial-tracking', [FinancialTrackingController::class, 'index'])->name('financial-tracking.index');
+
+    Route::group(['prefix' => 'accounting'], function () {
+        Route::get('/', [AccountingController::class, 'index'])->name('accounting.index');
+        
+        Route::group(['prefix' => 'vat-management', 'as' => 'accounting.'], function () {
+            Route::get('/create', [VatController::class, 'create'])->name('vat-management.create');
+            Route::post('/store', [VatController::class, 'store'])->name('vat-management.store');
+        });
+    });    
 
     Route::group(['prefix' => 'contracts'], function () {
         Route::get('/', [ContractController::class, 'index'])->name('contracts.index');
