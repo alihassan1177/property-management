@@ -28,12 +28,27 @@
     
                 <div class="mb-3">
                     <div class="form-group">
-                        <label class="form-label" for="name">Name: <span style="font-size: 12px" class="text-secondary">Use comma as separator for multiple values (name1, name2)</span></label>
-                        <input value="{{ old('name') }}" placeholder="Enter your name" type="text" id="name" name="name" class="form-control">
+                        <label class="form-label" for="vat_rates">Vat Rates</label>
+                        <input value="{{ old('vat_rates') }}" placeholder="Enter your Vat rates" type="number" id="vat_rates" vat_rates="vat_rates" class="form-control">
                     </div>
-                    @error('name')
+                    @error('vat_rates')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label class="form-label" for="country_select">Country</label>
+                        <select id="country_select" style="width: 100%" name="country_id">
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}">{{ $loop->iteration . ". " . $country->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('country_id')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+
                 </div>
     
             </div>
