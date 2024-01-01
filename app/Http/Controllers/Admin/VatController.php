@@ -41,4 +41,34 @@ class VatController extends Controller
 
         return redirect()->route('admin.accounting.index');
     }
+
+    function edit($id) {
+        $vat_rate = VatRate::findOrFail($id);
+        $countries = Country::all();
+        return view("admin.accounting.vat-management.edit", compact('vat_rate', 'countries'));
+    }
+
+    function update(Request $request, $id) {
+
+        $validator = Validator::make($request->all(), [
+            "vat_rates" => "required|integer|max:100"
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $vat_rate = VatRate::findOrFail($id);
+
+        try {
+            $vat_rate->update($validator->validated());
+            $this->successNotification("VAT Rate updated successfully");
+        } catch (\Exception $e) {
+            info("VAT CONTROLLER => UPDATE : " . $e->getMessage());
+            $this->errorNotification("Something went wrong, please try again later");
+        }
+
+        return redirect()->route('admin.accounting.index');
+    }
+
 }

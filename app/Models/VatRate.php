@@ -13,4 +13,8 @@ class VatRate extends Model
         "vat_rates",
         "country_id"
     ];
+
+    function country() {
+        return $this->belongsTo(Country::class, "country_id", "id");
+    }
 }

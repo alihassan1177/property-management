@@ -51,6 +51,9 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::group(['prefix' => 'vat-management', 'as' => 'accounting.'], function () {
             Route::get('/create', [VatController::class, 'create'])->name('vat-management.create');
             Route::post('/store', [VatController::class, 'store'])->name('vat-management.store');
+            Route::get('/edit/{id}', [VatController::class, 'edit'])->name('vat-management.edit');
+            Route::post('/update/{id}', [VatController::class, 'update'])->name('vat-management.update');
+            Route::delete('/delete/{id}', [VatController::class, 'delete'])->name('vat-management.delete');
         });
     });    
 
