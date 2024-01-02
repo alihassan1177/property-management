@@ -77,6 +77,7 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
             Route::get('/edit/{id}', [InvoiceController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [InvoiceController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [InvoiceController::class, 'delete'])->name('delete');
+            Route::post('/add-payment/{id}', [InvoiceController::class, 'add_payment'])->name('add-payment');
         });
     });
 

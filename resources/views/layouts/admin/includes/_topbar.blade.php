@@ -1,7 +1,6 @@
-<div class="mt-2">
+<div class="mt-2 mb-4">
     <div class="avatar dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="{{ asset('assets/img/avatar.png') }}" alt="Avatar">
         </button>
         <ul class="dropdown-menu">
@@ -16,3 +15,4 @@
         </ul>
     </div>
 </div>
+

@@ -20,7 +20,7 @@ class Invoice extends Model
             $nextId = $latestId + 1;
             $model->invoice_no = $prefix . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
-            $model->status = InvoiceStatus::Sent;
+            $model->status = InvoiceStatus::Draft;
         });
     }
 
@@ -39,27 +39,37 @@ class Invoice extends Model
         "notes"
     ];
 
+
     function invoice_category()  {
-        return $this->hasOne(InvoiceCategory::class, "invoice_category_id", "id");
+        return $this->hasOne(InvoiceCategory::class, "id", "invoice_category_id");
     }
 
     function tenant() {
-        return $this->hasOne(Tenant::class, "tenant_id", "id");
+        return $this->hasOne(Tenant::class, "id", "tenant_id");
     }
 
     function property() {
-        return $this->hasOne(Property::class, "property_id", "id");
+        return $this->hasOne(Property::class, "id", "property_id");
     }
 
     function getDueAmountAttribute() {
         if ($this->paid_amount) {
-            return $this->total_amount - $this->paid_amount;
+            return $this->taxed_amount - $this->paid_amount;
         }
-        return $this->total_amount;
+        return $this->taxed_amount;
+    }
+
+    function getTaxedAmountAttribute() {
+        if ($this->tax_percentage == 0) {
+            return $this->total_amount;
+        }
+
+        $percent_value = ($this->tax_percentage / 100) * $this->total_amount;
+        return intval($this->total_amount + $percent_value);
     }
 
     function getFormattedStatusAttribute() {
-        return strtoupper(str_replace("_", "", $this->status));        
+        return strtoupper(str_replace("_", " ", $this->status));        
     }
 
 }
