@@ -15,7 +15,7 @@ class VatController extends Controller
     use ResultNotification;
 
     function create() {
-        $countries = Country::all();
+        $countries = Country::whereDoesntHave('vat_rate')->get();
         return view('admin.accounting.vat-management.create', compact('countries'));
     }
 
