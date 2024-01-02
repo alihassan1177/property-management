@@ -1,19 +1,24 @@
 <?php
 
-use App\Http\Controllers\Admin\AccountingController;
-use App\Http\Controllers\Admin\AddressBookController;
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\ContractController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\FinancialTrackingController;
-use App\Http\Controllers\Admin\KeyDateController;
-use App\Http\Controllers\Admin\OwnerController;
-use App\Http\Controllers\Admin\ManagerController;
-use App\Http\Controllers\Admin\TenantController;
-use App\Http\Controllers\Admin\UnitController;
-use App\Http\Controllers\Admin\TaskController;
-use App\Http\Controllers\Admin\VatController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\{
+    AccountingController,
+    AuthController,
+    DashboardController,
+    KeyDateController,
+    UnitController,
+    AddressBookController,
+    FinancialTrackingController,
+    VatController,
+    InvoiceCategoryController,
+    InvoiceController,
+    TenantController,
+    OwnerController,
+    ContractController,
+    TaskController,
+    ManagerController
+};
 
 Route::group(['middleware' => ['guest:admin'], 'as' => 'admin.'], function () {
     Route::get('login', [AuthController::class, 'loginView'])->name('login');
@@ -45,22 +50,40 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
 
     Route::get('/financial-tracking', [FinancialTrackingController::class, 'index'])->name('financial-tracking.index');
 
-    Route::group(['prefix' => 'accounting'], function () {
-        Route::get('/', [AccountingController::class, 'index'])->name('accounting.index');
-        
-        Route::group(['prefix' => 'vat-management', 'as' => 'accounting.'], function () {
-            Route::get('/create', [VatController::class, 'create'])->name('vat-management.create');
-            Route::post('/store', [VatController::class, 'store'])->name('vat-management.store');
-            Route::get('/edit/{id}', [VatController::class, 'edit'])->name('vat-management.edit');
-            Route::post('/update/{id}', [VatController::class, 'update'])->name('vat-management.update');
-            Route::delete('/delete/{id}', [VatController::class, 'delete'])->name('vat-management.delete');
+    Route::group(['prefix' => 'accounting', 'as' => 'accounting.'], function () {
+        Route::get('/', [AccountingController::class, 'index'])->name('index');
+
+        Route::group(['prefix' => 'vat-management', 'as' => 'vat-management.'], function () {
+            Route::get('/create', [VatController::class, 'create'])->name('create');
+            Route::post('/store', [VatController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [VatController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [VatController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [VatController::class, 'delete'])->name('delete');
         });
-    });    
+
+        Route::group(['prefix' => 'invoice-categories', 'as' => 'invoice-categories.'], function () {
+            Route::get('/create', [InvoiceCategoryController::class, 'create'])->name('create');
+            Route::post('/store', [InvoiceCategoryController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [InvoiceCategoryController::class, 'show'])->name('show');
+            Route::get('/edit/{id}', [InvoiceCategoryController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [InvoiceCategoryController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [InvoiceCategoryController::class, 'delete'])->name('delete');
+        });
+
+        Route::group(['prefix' => 'invoices', 'as' => 'invoices.'], function () {
+            Route::get('/create', [InvoiceController::class, 'create'])->name('create');
+            Route::post('/store', [InvoiceController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [InvoiceController::class, 'show'])->name('show');
+            Route::get('/edit/{id}', [InvoiceController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [InvoiceController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [InvoiceController::class, 'delete'])->name('delete');
+        });
+    });
 
     Route::group(['prefix' => 'contracts'], function () {
         Route::get('/', [ContractController::class, 'index'])->name('contracts.index');
         Route::get('/show/{id}', [ContractController::class, 'show'])->name('contracts.show');
-    });    
+    });
 
     Route::group(['prefix' => 'tenants'], function () {
         Route::get('/', [TenantController::class, 'index'])->name('tenants.index');
@@ -109,6 +132,4 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::post('/update/{id}', [KeyDateController::class, 'update'])->name('keydates.update');
         Route::delete('/delete/{id}', [KeyDateController::class, 'delete'])->name('keydates.delete');
     });
-
-
 });
