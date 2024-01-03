@@ -180,7 +180,7 @@
 
 
 
-<div class="bg-white shadow-sm p-4 rounded">
+<div class="bg-white shadow-sm p-4 rounded mb-5">
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h4 class="m-0">Invoice Management</h4>
         <div class="d-flex gap-3">
@@ -276,6 +276,106 @@
 
     <div>
         {{ $invoices->links() }}
+    </div>
+
+</div>
+
+<div class="bg-white shadow-sm p-4 rounded">
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <h4 class="m-0">Rent Invoice Management</h4>
+        <div class="d-flex gap-3">
+            <form action="">
+                <input type="text" placeholder="Search" class="form-control">
+            </form>
+            <a href="{{ route('admin.accounting.rent-invoices.create') }}" class="btn btn-primary">
+                Add new Invoice
+            </a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Invoice No</th>
+                    <th scope="col">Issue Date</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Due Amount</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (!$rent_invoices->count())
+                <tr>
+                    <td colspan="10">
+                        <p class="text-center m-0 py-3">No results found</p>
+                    </td>
+                </tr>
+                @endif
+
+                @foreach ($rent_invoices as $invoice)
+
+                @php
+                $row = ($rent_invoices->currentpage() - 1) * $rent_invoices->perpage() + $loop->index + 1;
+                @endphp
+
+                <tr>
+                    <th scope="row">{{ $row }}</th>
+                    <th scope="row">{{ $invoice->invoice_no }}</th>
+                    <th scope="row">{{ \Carbon\Carbon::parse($invoice->issue_date)->isoFormat('LL') }}</th>
+                    <th scope="row">{{ \Carbon\Carbon::parse($invoice->due_date)->isoFormat('LL') }}</th>
+                    <th scope="row">{{ $invoice->due_amount }}</th>
+                    <th scope="row">{{ $invoice->total_amount }}</th>
+                    <th scope="row">{{ $invoice->formatted_status }}</th>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                       
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.accounting.invoices.show', $invoice->id) }}">
+                                        <button>View</button>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.accounting.invoices.edit', $invoice->id) }}">
+                                        <button>Update</button>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <form class="dropdown-item" action="{{ route('admin.accounting.invoices.delete', $invoice->id) }}" method="POST"
+                                        onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
+                                      @csrf
+                                      @method('DELETE')
+                                        <button type="submit">
+                                            Delete
+                                        </button>
+                                  </form>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        {{ $rent_invoices->links() }}
     </div>
 
 </div>

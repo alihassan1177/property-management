@@ -17,7 +17,8 @@ use App\Http\Controllers\Admin\{
     OwnerController,
     ContractController,
     TaskController,
-    ManagerController
+    ManagerController,
+    RentInvoiceController
 };
 
 Route::group(['middleware' => ['guest:admin'], 'as' => 'admin.'], function () {
@@ -78,6 +79,11 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
             Route::post('/update/{id}', [InvoiceController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [InvoiceController::class, 'delete'])->name('delete');
             Route::post('/add-payment/{id}', [InvoiceController::class, 'add_payment'])->name('add-payment');
+        });
+
+        Route::group(['prefix' => 'rent-invoices', 'as' => 'rent-invoices.'], function () {
+            Route::get('/create', [RentInvoiceController::class, 'create'])->name('create');
+            Route::post('/store', [RentInvoiceController::class, 'store'])->name('store');
         });
     });
 

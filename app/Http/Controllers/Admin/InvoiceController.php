@@ -16,7 +16,6 @@ use Illuminate\Validation\Rule;
 
 class InvoiceController extends Controller
 {
-
     use ResultNotification;
 
     function create()
