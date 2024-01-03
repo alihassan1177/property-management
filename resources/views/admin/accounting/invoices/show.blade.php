@@ -57,12 +57,14 @@
 
         </div>
 
+        @if (isset($invoice->invoice_category) && $invoice->invoice_category)            
         <div class="col-md-6">
             <div class="mb-3">
                 <p class="m-0"><strong>Invoice Category:</strong></p>
                 <p>{{ $invoice->invoice_category->name }}</p>
             </div>
         </div>
+        @endif
 
         <div class="col-md-6">
             <div class="mb-3">

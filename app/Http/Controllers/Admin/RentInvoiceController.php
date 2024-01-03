@@ -14,15 +14,20 @@ class RentInvoiceController extends Controller
 
     use ResultNotification;
 
-    function create()
+    function create(Request $request)
     {
-        $properties = Property::where(['status' => UnitStatus::OnRent])->whereHas(['country' => 'vat_rates'])->get();
-        dd($properties);
+        if (isset($request->property_id) && $request->property_id) {
+            $selected_property = Property::with('tenant')->findOrFail($request->property_id);
+            return view('admin.accounting.rent-invoices.create', compact('selected_property'));
+        }
+
+        $properties = Property::where(['status' => UnitStatus::OnRent])->get();
         return view('admin.accounting.rent-invoices.create', compact('properties'));
     }
 
     function store(Request $request)
     {
+
         $validator = validator()->make($request->all(), [
             'property_id' => 'required|exists:properties,id',
             'tenant_id' => 'required|exists:tenants,id',
@@ -41,8 +46,10 @@ class RentInvoiceController extends Controller
 
         $additional_values = [
             "total_amount" => $property->total_rent_amount,
-            "tax_percentage" => $property->country->vat_rate->vat_rates
+            "tax_percentage" => $property->country->vat_rate->vat_rates ?? 0
         ];
+
+        // dd($additional_values);
 
         $values = array_merge($validated, $additional_values);
 

@@ -59,7 +59,7 @@ class Property extends Model
 
     function getTotalRentAmountAttribute()
     {
-        $total = 0;
+        $total = $this->rent_amount;
 
         if (isset($this->electricity_information) && $this->electricity_information) {
             $electricity_info = unserialize($this->electricity_information);
@@ -81,13 +81,15 @@ class Property extends Model
             $total += $internet_info["price"] ?? 0;
         }
 
-        if (isset($this->country) && isset($this->country->vat_rate) && $this->country->vat_rate) {
-            if ($this->country->vat_rate->vat_rates == 0) {
-                return $total;
-            }
+        // if (isset($this->country) && isset($this->country->vat_rate) && $this->country->vat_rate) {
+        //     if ($this->country->vat_rate->vat_rates == 0) {
+        //         return $total;
+        //     }
 
-            $percent_value = ($this->country->vat_rate->vat_rates / 100) * $total;
-            return intval($total + $percent_value);
-        }
+        //     $percent_value = ($this->country->vat_rate->vat_rates / 100) * $total;
+        //     return intval($total + $percent_value);
+        // }
+
+        return $total;
     }
 }
