@@ -215,3 +215,39 @@ a.btn{
         justify-content: space-between;
     }
 }
+
+
+@media print {
+    .sidebar{
+        display: none;
+    }
+
+    .main-wrapper > .row {
+        display: block;
+    }
+
+    body {
+        overflow: auto;
+    }
+    
+    .content {
+        height: auto;
+    }
+
+    .g-3{
+        --bs-gutter-y: 0rem;
+        --bs-gutter-x: 0rem;
+    }
+
+    p{
+        margin-bottom: 0px;
+    }
+
+    .topbar{
+        display: none !important;
+    }
+
+    .page-header{
+        display: none !important;
+    }
+}

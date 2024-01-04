@@ -38,7 +38,12 @@
         <div class="row g-5">
     
             <div class="col-12">
-    
+
+                @if (empty($invoice->invoice_category_id))
+                <input type="hidden" name="rent_invoice" value="1">
+                @endif
+
+                @if (isset($invoice->invoice_category_id) && $invoice->invoice_category_id)
                 <div class="form-group">
                     <label>Property</label>
 
@@ -56,6 +61,7 @@
                     @enderror
 
                 </div>
+                @endif
 
                 <div class="row">
                     <div class="col-md-6">
@@ -82,6 +88,7 @@
                     </div>
                 </div>
 
+                @if (isset($invoice->invoice_category_id) && $invoice->invoice_category_id)
                 <div class="form-group">
                     <label>Category</label>
 
@@ -97,7 +104,9 @@
                         </span>
                     @enderror
                 </div>
+                @endif
 
+                @if (isset($invoice->invoice_category_id) && $invoice->invoice_category_id)
                 <div class="form-group">
                     <label>Amount</label>
                     <input type="number" value="{{ old('total_amount', $invoice->total_amount) }}" name="total_amount" class="form-control">
@@ -117,6 +126,7 @@
                         </span>
                     @enderror
                 </div>
+                @endif
 
                 <div class="form-group">
                     <label>Invoice Details</label>

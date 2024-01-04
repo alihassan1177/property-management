@@ -1,6 +1,6 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Invoice Category Details')
+@section('title', 'Invoice Details')
 
 @section('content')
 
@@ -154,6 +154,34 @@
             <div class="mb-3">
                 <p class="m-0"><strong>Country:</strong></p>
                 <p>{{ $invoice->property->country->name }}</p>
+            </div>
+        </div>
+        @endif
+
+        @if (isset($invoice->property->tenant) && $invoice->property->tenant)            
+
+        <div class="col-12"><hr class="my-5"></div>
+
+        <h3 class="h5">Tenant Information</h3>
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <p class="m-0"><strong>Name:</strong></p>
+                <p>{{ $invoice->property->tenant->name }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <p class="m-0"><strong>Email:</strong></p>
+                <p>{{ $invoice->property->tenant->email }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <p class="m-0"><strong>Phone:</strong></p>
+                <p>{{ $invoice->property->tenant->phone }}</p>
             </div>
         </div>
         @endif

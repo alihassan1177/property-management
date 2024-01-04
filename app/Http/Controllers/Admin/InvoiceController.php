@@ -80,13 +80,21 @@ class InvoiceController extends Controller
             return redirect()->route('admin.accounting.index');
         }
 
-        $validator = validator()->make($request->all(), [
+        $rules = [
             'notes' => 'required|max:2000',
             'due_date' => 'required|date',
             'issue_date' => 'required|date',
             'tax_percentage' => 'required|integer|max:100',
             'total_amount' => 'required'
-        ]);
+        ];
+
+        if ($request->rent_invoice) {
+            unset($rules['tax_percentage']);   
+            unset($rules['total_amount']);   
+        }
+
+
+        $validator = validator()->make($request->all(), $rules);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();

@@ -28,7 +28,7 @@
 
 <body class="bg-light">
 
-    <div class="container-fluid">
+    <div id="main-wrapper" class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-xl-2 sidebar bg-white shadow-sm">
                 @include('layouts.admin.includes._sidebar')
