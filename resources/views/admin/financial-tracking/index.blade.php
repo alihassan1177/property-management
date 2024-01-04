@@ -6,65 +6,80 @@
 
 <div class="page-header">
     <div class="d-flex align-items-center">
-        <a href="#" class="btn">
-            <i class="fa fa-arrow-left"></i>
-        </a>
         <h3>Financial Tracking</h3>
     </div>
 </div>
 
-<div class="bg-light p-4 rounded">
-    <div class="d-flex align-items-center justify-content-between mb-5">
-        <h4 class="m-0">All Invoices</h4>
-        <div class="d-flex gap-3">
+<div class="bg-white shadow-sm p-4 rounded mb-5">
+    <div style="gap: 20px" class="d-flex align-items-center justify-content-between mb-5 flex-wrap">
+        <h4 class="m-0">Rent Follow Up</h4>
+        <div class="d-flex gap-3 flex-wrap">
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <button class="btn">
-                Refresh
-            </button>
-            <a href="add-invoice.html" class="btn btn-primary">
-                Add new Invoice
+            <a href="{{ route('admin.accounting.vat-management.create') }}" class="btn btn-primary">
+                Add new Entry
             </a>
         </div>
     </div>
 
-    <div class="table-responsive">
+    {{-- <div class="table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Unit no</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Cadastral Number</th>
-                    <th scope="col">Owner Name</th>
-                    <th scope="col">Owner Phone</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Vat Rate</th>
                 </tr>
             </thead>
             <tbody>
+                @if (!$vat_rates->count())
                 <tr>
-                    <th scope="row">U123</th>
-                    <td>123 Main Street, Cityvile, 56789</td>
-                    <td>CAD567890</td>
-                    <td>ON4567</td>
-                    <td>(555) 123-4567</td>
+                    <td colspan="4">
+                        <p class="text-center m-0 py-3">No results found</p>
+                    </td>
                 </tr>
+                @endif
+
+                @foreach ($vat_rates as $vat_rate)
+
+                @php
+                $row = ($vat_rates ->currentpage() - 1) * $vat_rates ->perpage() + $loop->index + 1;
+                @endphp
+
+                <tr>
+                    <th scope="row">{{ $row }}</th>
+                    <td>{{ $vat_rate->country->name }}</td>
+                    <td>{{ $vat_rate->vat_rates."%" }}</td>
+                   
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.accounting.vat-management.edit', $vat_rate->id) }}">
+                                        <button>Update</button>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+
+
             </tbody>
         </table>
     </div>
 
     <div>
-        <nav class="float-end" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-left"></i></a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i style="font-size: 12px;"
-                            class="fa fa-chevron-right"></i></a></li>
-            </ul>
-        </nav>
-    </div>
+        {{ $vat_rates->links() }}
+    </div> --}}
 
 </div>
 

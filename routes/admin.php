@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\{
     ContractController,
     TaskController,
     ManagerController,
+    RentFollowUpController,
     RentInvoiceController
 };
 
@@ -49,7 +50,12 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/show/{id}', [AddressBookController::class, 'show'])->name('address-book.show');
     });
 
-    Route::get('/financial-tracking', [FinancialTrackingController::class, 'index'])->name('financial-tracking.index');
+    Route::group(['prefix' => 'financial-tracking', 'as' => 'financial-tracking.'], function(){
+        Route::get('/', [FinancialTrackingController::class, 'index'])->name('index');
+
+        Route::resource('rent-follow-ups', RentFollowUpController::class)->only(['create', 'store', 'show']);
+        
+    });
 
     Route::group(['prefix' => 'accounting', 'as' => 'accounting.'], function () {
         Route::get('/', [AccountingController::class, 'index'])->name('index');
