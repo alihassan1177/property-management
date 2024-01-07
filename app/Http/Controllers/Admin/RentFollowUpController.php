@@ -16,7 +16,7 @@ class RentFollowUpController extends Controller
 
     function create()
     {
-        $rent_invoices = Invoice::with(['property' => 'tenant'])->whereNull('invoice_category_id')->get();
+        $rent_invoices = Invoice::with(['property'])->whereNull('invoice_category_id')->get();
         return view('admin.financial-tracking.rent-follow-ups.create', compact('rent_invoices'));
     }
 
@@ -52,7 +52,9 @@ class RentFollowUpController extends Controller
     }
 
     function show($id) {
-        $rent_follow_up = RentFollowUp::with('invoice')->findOrFail($id);
-        return view('admin.financial-tracking.rent-follow-ups.show', compact(''));
+        $rent_follow_up = RentFollowUp::with(['invoice' => [
+            'property' => ['tenant']
+        ]])->findOrFail($id);
+        return view('admin.financial-tracking.rent-follow-ups.show', compact('rent_follow_up'));
     }
 }

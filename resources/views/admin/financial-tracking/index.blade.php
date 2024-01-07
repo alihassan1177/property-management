@@ -17,23 +17,25 @@
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
-            <a href="{{ route('admin.accounting.vat-management.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.financial-tracking.rent-follow-ups.create') }}" class="btn btn-primary">
                 Add new Entry
             </a>
         </div>
     </div>
 
-    {{-- <div class="table-responsive">
+    <div class="table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Country</th>
-                    <th scope="col">Vat Rate</th>
+                    <th scope="col">Invoice NO</th>
+                    <th scope="col">Property Cadastral NO</th>
+                    <th scope="col">Tenant Name</th>
+                    <th scope="col">Notes</th>
                 </tr>
             </thead>
             <tbody>
-                @if (!$vat_rates->count())
+                @if (!$rent_follow_ups->count())
                 <tr>
                     <td colspan="4">
                         <p class="text-center m-0 py-3">No results found</p>
@@ -41,17 +43,19 @@
                 </tr>
                 @endif
 
-                @foreach ($vat_rates as $vat_rate)
+                @foreach ($rent_follow_ups as $rent_follow_up)
 
                 @php
-                $row = ($vat_rates ->currentpage() - 1) * $vat_rates ->perpage() + $loop->index + 1;
+                $row = ($rent_follow_ups ->currentpage() - 1) * $rent_follow_ups ->perpage() + $loop->index + 1;
                 @endphp
 
                 <tr>
                     <th scope="row">{{ $row }}</th>
-                    <td>{{ $vat_rate->country->name }}</td>
-                    <td>{{ $vat_rate->vat_rates."%" }}</td>
-                   
+                    <td>{{ $rent_follow_up->invoice->invoice_no }}</td>
+                    <td>{{ $rent_follow_up->invoice->property->cadastral_number }}</td>
+                    <td>{{ $rent_follow_up->invoice->property->tenant->name }}</td>
+                    <td>{{ Str::limit($rent_follow_up->notes, 20, "...") }}</td>
+                    
                     <td>
                         <div class="dropdown">
                             <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -61,14 +65,15 @@
                             <ul class="dropdown-menu">
 
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.accounting.vat-management.edit', $vat_rate->id) }}">
-                                        <button>Update</button>
+                                    <a class="dropdown-item" href="{{ route('admin.financial-tracking.rent-follow-ups.show', $rent_follow_up->id) }}">
+                                        <button>View</button>
                                     </a>
                                 </li>
 
                             </ul>
                         </div>
                     </td>
+                    
                 </tr>
                 @endforeach
 
@@ -78,8 +83,8 @@
     </div>
 
     <div>
-        {{ $vat_rates->links() }}
-    </div> --}}
+        {{ $rent_follow_ups->links() }}
+    </div>
 
 </div>
 

@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\RentFollowUp;
 use Illuminate\Http\Request;
 
 class FinancialTrackingController extends Controller
 {
-    function index() {
-        
-        return view('admin.financial-tracking.index');
+    function index()
+    {
+
+        $rent_follow_ups = RentFollowUp::with([
+            'invoice' => [
+                'property' => ['tenant']
+            ]
+        ])->latest()->paginate(config('app.per_page_items'), ["*"], "rent_follow_ups");
+        // dd($rent_follow_ups->toArray()["data"]);   
+        return view('admin.financial-tracking.index', compact('rent_follow_ups'));
     }
 }
