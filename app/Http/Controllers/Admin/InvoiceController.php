@@ -144,6 +144,9 @@ class InvoiceController extends Controller
 
         try {
             $invoice->update($values);
+
+            $invoice->invoice_payments()->create(['invoice_id' => $invoice->id, 'amount' => $request->paid_amount]);
+
             $this->successNotification("Invoice Payment added successfully");
         } catch (\Exception $e) {
             info("INVOICE CONTROLLER => ADD PAYMENT : " . $e->getMessage());

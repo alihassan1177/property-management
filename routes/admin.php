@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\{
     KeyDateController,
     UnitController,
     AddressBookController,
+    AutomatedIndexingController,
     FinancialTrackingController,
     VatController,
     InvoiceCategoryController,
@@ -54,6 +55,10 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/', [FinancialTrackingController::class, 'index'])->name('index');
 
         Route::resource('rent-follow-ups', RentFollowUpController::class)->only(['create', 'store', 'show']);
+
+        Route::group(['prefix' => 'automated-indexings', 'as' => 'automated-indexings.'], function(){
+            Route::post('/index-docs', [AutomatedIndexingController::class, 'index_docs'])->name('index-docs');
+        });
         
     });
 

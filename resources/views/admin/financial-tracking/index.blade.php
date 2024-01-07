@@ -88,4 +88,87 @@
 
 </div>
 
+<div class="bg-white shadow-sm p-4 rounded mb-5">
+    <div style="gap: 20px" class="d-flex align-items-center justify-content-between mb-5 flex-wrap">
+        <h4 class="m-0">Automated Indexings</h4>
+        <div class="d-flex gap-3 flex-wrap">
+        
+            <form action="">
+                <input type="text" placeholder="Search" class="form-control">
+            </form>
+
+            <form method="POST" action="{{ route('admin.financial-tracking.automated-indexings.index-docs') }}">
+                @csrf
+                <button class="btn btn-primary">Index Docs</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!$automated_indexings->count())
+                <tr>
+                    <td colspan="4">
+                        <p class="text-center m-0 py-3">No results found</p>
+                    </td>
+                </tr>
+                @endif
+
+                @foreach ($automated_indexings as $automated_indexing)
+
+                @php
+                $row = ($automated_indexings ->currentpage() - 1) * $automated_indexings ->perpage() + $loop->index + 1;
+                @endphp
+
+                <tr>
+                    <th scope="row">{{ $row }}</th>
+                    <td>{{ $automated_indexing->document_name }}</td>
+                    <td>{{ $automated_indexing->document_type }}</td>
+                    <td>{{ \Carbon\Carbon::parse($automated_indexing->document_date)->isoFormat('LL') }}</td>
+                    <td>{{ Str::limit($automated_indexing->document_content, 50, "...") }}</td>
+
+                    
+                    <td>
+                        {{-- <div class="dropdown">
+                            <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.financial-tracking.rent-follow-ups.show', $rent_follow_up->id) }}">
+                                        <button>View</button>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div> --}}
+                    </td>
+                    
+                </tr>
+                @endforeach
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        {{ $automated_indexings->links() }}
+    </div>
+
+</div>
+
+
 @endsection

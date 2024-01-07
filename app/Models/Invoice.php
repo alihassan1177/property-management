@@ -44,6 +44,10 @@ class Invoice extends Model
         return $this->hasOne(InvoiceCategory::class, "id", "invoice_category_id");
     }
 
+    function invoice_payments() {
+        return $this->hasMany(InvoicePayments::class, "invoice_id", "id");
+    }
+
     function tenant() {
         return $this->hasOne(Tenant::class, "id", "tenant_id");
     }
