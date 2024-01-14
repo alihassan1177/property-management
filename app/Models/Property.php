@@ -57,6 +57,10 @@ class Property extends Model
         return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
     }
 
+    function invoices() {
+        return $this->hasMany(Invoice::class, 'property_id', 'id');
+    }
+
     function getTotalRentAmountAttribute()
     {
         $total = $this->rent_amount;

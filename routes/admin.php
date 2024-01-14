@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\{
     UnitController,
     AddressBookController,
     AutomatedIndexingController,
+    ChargeSettlementController,
     FinancialTrackingController,
     VatController,
     InvoiceCategoryController,
@@ -58,6 +59,11 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
 
         Route::group(['prefix' => 'automated-indexings', 'as' => 'automated-indexings.'], function(){
             Route::post('/index-docs', [AutomatedIndexingController::class, 'index_docs'])->name('index-docs');
+        });
+
+        Route::group(['prefix' => 'charge-settlements', 'as' => 'charge-settlements.'], function(){
+            Route::get('/create', [ChargeSettlementController::class, 'create'])->name('create');
+            Route::post('/store', [ChargeSettlementController::class, 'store'])->name('store');
         });
         
     });
