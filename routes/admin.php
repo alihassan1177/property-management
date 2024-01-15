@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\{
     TenantController,
     OwnerController,
     ContractController,
+    EmailReminderController,
     TaskController,
     ManagerController,
     RentFollowUpController,
@@ -62,20 +63,19 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/show/{id}', [AddressBookController::class, 'show'])->name('address-book.show');
     });
 
-    Route::group(['prefix' => 'financial-tracking', 'as' => 'financial-tracking.'], function(){
+    Route::group(['prefix' => 'financial-tracking', 'as' => 'financial-tracking.'], function () {
         Route::get('/', [FinancialTrackingController::class, 'index'])->name('index');
 
         Route::resource('rent-follow-ups', RentFollowUpController::class)->only(['create', 'store', 'show']);
 
-        Route::group(['prefix' => 'automated-indexings', 'as' => 'automated-indexings.'], function(){
+        Route::group(['prefix' => 'automated-indexings', 'as' => 'automated-indexings.'], function () {
             Route::post('/index-docs', [AutomatedIndexingController::class, 'index_docs'])->name('index-docs');
         });
 
-        Route::group(['prefix' => 'charge-settlements', 'as' => 'charge-settlements.'], function(){
+        Route::group(['prefix' => 'charge-settlements', 'as' => 'charge-settlements.'], function () {
             Route::get('/create', [ChargeSettlementController::class, 'create'])->name('create');
             Route::post('/store', [ChargeSettlementController::class, 'store'])->name('store');
         });
-        
     });
 
     Route::group(['prefix' => 'accounting', 'as' => 'accounting.'], function () {
@@ -166,4 +166,6 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::post('/update/{id}', [KeyDateController::class, 'update'])->name('keydates.update');
         Route::delete('/delete/{id}', [KeyDateController::class, 'delete'])->name('keydates.delete');
     });
+
+    Route::resource('email-reminders', EmailReminderController::class);
 });

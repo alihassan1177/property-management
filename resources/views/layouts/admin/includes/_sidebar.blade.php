@@ -78,4 +78,10 @@
             <span>Address Book</span>
         </a>
     </li>
+    <li>
+        <a class="@if(request()->routeIs('admin.email-reminders.*')) active @endif" href="{{ route('admin.email-reminders.index') }}">
+            <i class="fa fa-envelope"></i>
+            <span>Email Reminders</span>
+        </a>
+    </li>
 </ul>
