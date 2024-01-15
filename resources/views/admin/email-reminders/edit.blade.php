@@ -1,68 +1,80 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Update Key Date')
+@section('title', 'Update Email Reminder')
 
 @section('content')
 
-
 <div class="page-header">
     <div class="d-flex align-items-center">
-        <h3>Update Key Date</h3>
+        <h3>Edit Email Reminder</h3>
     </div>
 </div>
 
 <div class="bg-white shadow-sm p-4 rounded">
-    <form method="POST" action="{{ route('admin.keydates.update', $keydate->id) }}">
+    <form method="POST" action="{{ route('admin.email-reminders.store') }}">
         @csrf
         <div class="d-flex align-items-center justify-content-between mb-5">
-            <h4 class="m-0">Key date details form</h4>
+            <h4 class="m-0">Email Reminder form</h4>
             <div>
                 <button class="btn btn-primary">
-                    Update Key Date
+                    Update Email Reminder
                 </button>
             </div>
         </div>
 
         <div class="row g-3">
+
             <div class="col-12">
-                <label class="form-label" for="key_date">Key Date</label>
-                <input value="{{ $keydate->key_date }}" class="form-control" type="date" name="key_date" id="key_date">
-                @error('key_date')
-                <span class="text-danger">{{ $message }}</span>
+                <label class="form-label" for="name">Name</label>
+                <input class="form-control" placeholder="Enter reminder name" type="text" name="name" value="{{ old('name', $email_reminder->name) }}" id="name">
+                @error('name')
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="col-12">
-                <label class="form-label" for="reminder_date">Reminder Date</label>
-                <input value="{{ $keydate->reminder_date }}" class="form-control" type="date" name="reminder_date" id="reminder_date">
-                @error('reminder_date')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="col-12">
-                <label class="form-label" for="key_date_description">Event</label>
-                <textarea  name="key_date_description" class="form-control" id="key_date_description" cols="30"
-                    rows="10">{{ $keydate->key_date_description }}
-                </textarea>
-                @error('key_date_description')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="col-12">
-                <label class="form-label" for="key_date">Property</label>
-                <select style="width: 100%" disabled id="property_id">
-                    @foreach ($properties as $property)
-                    <option @selected($property->id == $keydate->property_id) value="{{ $property->id }}">
-                        {{ $property->cadastral_number }}
-                    </option>
+                <label class="form-label" for="email-select">Recipient</label>
+                <select style="width: 100%" name="email" id="email-select">
+                    @foreach ($managers as $manager)
+                        <option @selected($manager->email == old('email', $email_reminder->email)) value="{{ $manager->email }}">{{ $manager->email }} -- Manager</option>
+                    @endforeach
+                    @foreach ($owners as $owner)
+                        <option @selected($owner->email == old('email', $email_reminder->email)) value="{{ $owner->email }}">{{ $owner->email }} -- Owner</option>
+                    @endforeach
+                    @foreach ($tenants as $tenant)
+                    <option @selected($tenant->email == old('email', $email_reminder->email))  value="{{ $tenant->email }}">{{ $tenant->email }} -- Tenant</option>
                     @endforeach
                 </select>
-                @error('property_id')
-                <span class="text-danger">{{ $message }}</span>
+                @error('email')
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+
+            <div class="col-12">
+                <label class="form-label" for="date">Reminder Date</label>
+                <input class="form-control" placeholder="Select Date" type="date" name="date" value="{{ \Carbon\Carbon::parse(old('date', $email_reminder->reminder_date))->format('Y-m-d') }}" id="date">
+                @error('date')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" for="time">Reminder Time</label>
+                <input class="form-control" placeholder="Select the time on which recipient should receive the reminder" type="time" name="time" value="{{ \Carbon\Carbon::parse(old('date', $email_reminder->reminder_date))->format('H:i') }}" id="time">
+                @error('time')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" for="email">Message</label>
+                <textarea class="form-control" placeholder="Enter message" name="message" id="" cols="30" rows="10">{{ old('message', $email_reminder->message) }}</textarea>
+                @error('message')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+
 
         </div>
 
@@ -77,7 +89,7 @@
 
 <script>
     $(function() {
-        $('#property_id').select2({
+        $('#email-select').select2({
             width : 'style'
         })
     })

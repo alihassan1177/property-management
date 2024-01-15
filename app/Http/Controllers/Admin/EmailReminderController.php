@@ -10,6 +10,7 @@ use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Traits\ResultNotification;
+use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 
 class EmailReminderController extends Controller
@@ -43,6 +44,7 @@ class EmailReminderController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $managers = User::where(['user_type' => UserType::Manager])->get();
         $owners = User::where(['user_type' => UserType::Owner])->get();
         $tenants = Tenant::all();
@@ -53,7 +55,8 @@ class EmailReminderController extends Controller
 
         $validator = validator()->make($request->all(), [
             "name" => 'required|max:155',
-            "reminder_date" => 'required|datetime',
+            "date" => 'required|date',
+            "time" => 'required',
             "email" => ['required', 'email', Rule::in($emails)],
             "message" => 'required|max:2000'
         ]);
@@ -62,8 +65,14 @@ class EmailReminderController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
+
+        $time = explode(":", $request->time);
+
+        $datetime = Carbon::parse($request->date)->setTime($time[0], $time[1]);
+
         $additional_values = [
-            'reminder_sent' => Util::No
+            'reminder_sent' => Util::No,
+            'reminder_date' => $datetime
         ];
 
         $values = array_merge($additional_values, $validator->validated());
@@ -118,7 +127,8 @@ class EmailReminderController extends Controller
 
         $validator = validator()->make($request->all(), [
             "name" => 'required|max:155',
-            "reminder_date" => 'required|datetime',
+            "date" => 'required|date',
+            "time" => 'required',
             "email" => ['required', 'email', Rule::in($emails)],
             "message" => 'required|max:2000'
         ]);
@@ -127,8 +137,18 @@ class EmailReminderController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
+        $time = explode(":", $request->time);
+
+        $datetime = Carbon::parse($request->date)->setTime($time[0], $time[1]);
+
+        $additional_values = [
+            'reminder_date' => $datetime
+        ];
+
+        $values = array_merge($validator->validated(), $additional_values);
+
         try {
-            $email_reminder->update($validator->validated());
+            $email_reminder->update($values);
             $this->successNotification("Email reminder updated successfully");
         } catch (\Exception $e) {
             info("ERROR : " . $e->getMessage());

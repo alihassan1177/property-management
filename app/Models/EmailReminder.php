@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class EmailReminder extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "reminder_date",
+        "name",
+        "email",
+        "reminder_sent",
+        "message"
+    ];
 }
