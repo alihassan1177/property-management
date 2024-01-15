@@ -11,7 +11,8 @@
 </div>
 
 <div class="bg-white shadow-sm p-4 rounded">
-    <form method="POST" action="{{ route('admin.email-reminders.store') }}">
+    <form method="POST" action="{{ route('admin.email-reminders.update', $email_reminder->id) }}">
+        @method('PUT')
         @csrf
         <div class="d-flex align-items-center justify-content-between mb-5">
             <h4 class="m-0">Email Reminder form</h4>

@@ -1,7 +1,7 @@
 @component('mail::message')
     
 
-This is This
+Reminder Mail
 
 Thanks<br>
 @endcomponent
