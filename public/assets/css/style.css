@@ -251,3 +251,8 @@ a.btn{
         display: none !important;
     }
 }
+
+.sidebar .navigation{
+    overflow-y: auto;
+    max-height: fit-content;
+}
