@@ -31,6 +31,16 @@ Route::group(['middleware' => ['guest:admin'], 'as' => 'admin.'], function () {
 
 Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], function () {
 
+    // Route::get('/send-email', function(){
+    //     try {
+    //         $user = User::where('email', 'ah927481@gmail.com')->first();
+    //         Notification::send($user, new InvoiceCreated());
+    //         echo "DONE";
+    //     } catch (\Exception $e) {
+    //         echo $e->getMessage();
+    //     }
+    // });
+
     Route::post('/logout', [AuthController::class, "logout"])->name('logout');
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
