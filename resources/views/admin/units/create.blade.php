@@ -124,6 +124,7 @@
                     Manager information
                 </h5>
                 <select id="manager_select" style="width: 100%" name="manager_id">
+                    <option value="">No manager selected</option>
                     @foreach ($managers as $manager)
                         <option value="{{ $manager->id }}">{{ $loop->iteration . ". " . $manager->name . " : " . $manager->email }}</option>
                     @endforeach

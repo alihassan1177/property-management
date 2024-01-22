@@ -4,7 +4,7 @@
 
 <div class="auth-form-wrapper">
     
-    <h2 class="fw-bold mb-4">owner Sign In</h2>
+    <h2 class="fw-bold mb-4">Owner Sign In</h2>
 
     <form method="POST" class="row g-3" action="{{ route('owner.login.attempt') }}" >
         @csrf

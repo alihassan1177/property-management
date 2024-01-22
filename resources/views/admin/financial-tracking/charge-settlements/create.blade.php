@@ -19,7 +19,7 @@
 
 <div class="page-header">
     <div class="d-flex align-items-center">
-        <h3>Rent Follow Up</h3>
+        <h3>Charge Settlement</h3>
     </div>
 </div>
 
@@ -52,34 +52,7 @@
     
             <div class="col-12">
     
-                <div class="form-group">
-                    <label>Rent Invoices</label>
 
-                    <select name="invoice_id" id="property_select" style="width: 100%">
-                        <option selected="selected" value="">Select Invoice</option>
-                        @foreach ($rent_invoices as $invoice)
-                            <option value="{{ $invoice->id }}">{{ $invoice->invoice_no }} : {{ $invoice->property->cadastral_number }} : {{ $invoice->property->address }}</option>
-                        @endforeach
-                    </select>
-
-                    @error('invoice_id')
-                        <span class="text-danger">
-                            {{ $message }}
-                        </span>
-                    @enderror
-
-                </div>
-
-                <div class="form-group">
-                    <label>Follow Up Details</label>
-                    <textarea class="form-control" style="min-height: 200px" name="notes" placeholder="Enter Invoice Details"></textarea>
-                    @error('notes')
-                        <span class="text-danger">
-                            {{ $message }}
-                        </span>
-                    @enderror
-                </div>
-         
             </div>
     
     
@@ -94,11 +67,4 @@
 @endsection
 
 @section('scripts')
-<script>
-    $(function() {
-        $("#property_select").select2({
-            width : "style"
-        })
-    })
-</script>
 @endsection

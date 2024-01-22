@@ -14,13 +14,28 @@ class ChargeSettlementController extends Controller
     {
         $property_id = request('property_id');
         if (!isset($property_id)) {
-            $units = Property::where(['status' => UnitStatus::OnRent])->get();
+
+            $units = Property::where(['status' => UnitStatus::OnRent])
+                ->with(
+                    [
+                        'invoices' => function ($query) {
+                            return $query
+                                ->whereNull('invoice_category_id')
+                                ->whereDate('due_date', '<', now())
+                                ->with('invoice_payments');
+                        }
+                    ]
+                )
+                ->get();
+
+            dd($units->toArray());
+
             return view('admin.financial-tracking.charge-settlements.create', compact('units'));
         }
 
         $property = Property::with(['invoices' => function ($query) {
             return $query->whereNull('invoice_category_id')->with('invoice_payments');
-        }])->findOrFail($property_id);
+        }, 'tenant', 'owner'])->withCount('invoices')->findOrFail($property_id);
         dd($property->toArray());
 
         return view('admin.financial-tracking.charge-settlements.create', compact('property'));
