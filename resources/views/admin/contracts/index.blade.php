@@ -17,6 +17,7 @@
             <form action="">
                 <input type="text" placeholder="Search" class="form-control">
             </form>
+            <a href="{{ route('admin.contracts.create') }}" class="btn btn-primary">Add Contract</a>
         </div>
     </div>
 
@@ -36,7 +37,7 @@
 
                 @if (!$contracts->count())
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         <p class="text-center m-0 py-3">No results found</p>
                     </td>
                 </tr>

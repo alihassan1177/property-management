@@ -28,12 +28,30 @@ class Contract extends Model
     ];
 
 
-    function tenant() {
-        return $this->belongsTo(Tenant::class, "tenant_id", "id");
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            $lastId = static::latest()->value('id');
+            $newId = $lastId ? $lastId + 1 : 1;
+            $formattedId = 'CONTRACT_' . str_pad($newId, 4, '0', STR_PAD_LEFT);
+            $model->contract_id = $formattedId;
+        });
+
+        static::created(function () {
+            info("CONTRACT CREATED");
+        });
+
     }
 
-    function property() {
+    function tenant()
+    {
+        return $this->belongsTo(AddressBook::class, "tenant_id", "id");
+    }
+
+    function property()
+    {
         return $this->belongsTo(Property::class, "property_id", "id");
     }
-
 }

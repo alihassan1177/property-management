@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\UnitStatus;
-use App\Enums\UnitType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Enums\UserType;
+use App\Models\AddressBook;
 use App\Models\Country;
 use App\Models\Property;
 use App\Traits\ResultNotification;
@@ -27,8 +25,8 @@ class UnitController extends Controller
     function create()
     {
         $countries = Country::all();
-        $owners = User::where(['user_type' => UserType::Owner])->latest()->get();
-        $managers = User::where(['user_type' => UserType::Manager])->latest()->get();
+        $managers = AddressBook::latest()->get();
+        $owners =   AddressBook::latest()->get();
         return view('admin.units.create', compact('owners', 'managers', 'countries'));
     }
 
@@ -43,7 +41,8 @@ class UnitController extends Controller
             "floors" => "required",
             "number_of_beds" => "required",
             "number_of_baths" => "required",
-            "owner_id" => "required|exists:users,id",
+            "owner_id" => "required",
+            "manager_id" => "nullable",
             "tenancy_agreement_terms" => "required",
             "additional_notes" => "nullable",
             "rent_amount" => "required",
@@ -110,7 +109,7 @@ class UnitController extends Controller
     function edit($id)
     {
         $property = Property::where(['id' => $id])->firstOrFail();
-        $owners = User::where(['user_type' => UserType::Owner])->get();
+        $owners = AddressBook::latest()->get();
         return view('admin.units.edit', compact('property', 'owners'));
     }
 
@@ -130,7 +129,7 @@ class UnitController extends Controller
                 'rental_period' => 'integer|required',
                 'security_deposit' => 'integer|required',
                 'floors' => 'integer|required',
-                'owner_id' => 'required|exists:users,id'
+                'owner_id' => 'required'
             ]
         );
 
