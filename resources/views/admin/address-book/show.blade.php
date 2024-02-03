@@ -26,29 +26,17 @@
 
             <div class="mb-3">
                 <p class="m-0"><strong>Name:</strong></p>
-                <ul>
-                    @foreach (json_decode($entry->name) as $name)
-                        <li>{{ trim($name) }}</li>
-                    @endforeach
-                </ul>
+                <p>{{ $entry->name }}</p>
             </div>
 
             <div class="mb-3">
                 <p class="m-0"><strong>Email:</strong></p>
-                <ul>
-                    @foreach (json_decode($entry->email) as $email)
-                        <li>{{ trim($email) }}</li>
-                    @endforeach
-                </ul>
+                {{ $entry->email }}
             </div>
 
             <div class="mb-3">
                 <p class="m-0"><strong>Phone:</strong></p>
-                <ul>
-                    @foreach (json_decode($entry->phone) as $phone)
-                        <li>{{ $phone }}</li>
-                    @endforeach
-                </ul>
+                {{ $entry->phone }}
             </div>
 
             <div class="mb-3">

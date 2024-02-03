@@ -44,17 +44,17 @@ class Property extends Model
 
     function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id', 'id');
+        return $this->belongsTo(AddressBook::class, 'owner_id', 'id');
     }
 
     function manager()
     {
-        return $this->belongsTo(User::class, 'manager_id', 'id');
+        return $this->belongsTo(AddressBook::class, 'manager_id', 'id');
     }
 
     function tenant()
     {
-        return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
+        return $this->belongsTo(AddressBook::class, 'tenant_id', 'id');
     }
 
     function invoices() {

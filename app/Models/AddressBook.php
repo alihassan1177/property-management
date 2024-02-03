@@ -13,18 +13,8 @@ class AddressBook extends Model
         "name",
         "email",
         "phone",
-        "address"
+        "address",
+        "group_id",
+        "created_at"
     ];
-
-    function getFormatedNameAttribute() {
-        return implode(",", json_decode($this->name));
-    }
-
-    function getFormatedEmailAttribute() {
-        return implode(",", json_decode($this->email));        
-    }
-
-    function getFormatedPhoneAttribute() {
-        return implode(",", json_decode($this->phone));        
-    }
 }

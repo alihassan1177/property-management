@@ -7,6 +7,7 @@ use App\Traits\ResultNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\AddressBook;
+use Carbon\Carbon;
 
 class AddressBookController extends Controller
 {
@@ -49,12 +50,17 @@ class AddressBookController extends Controller
         $data = [];
         $keys = ["name", "email", "phone", "address"];
 
+        $group_id = uniqid("GROUP_");
+        $now = Carbon::now();
+
         foreach ($chunk as $item) {
             foreach ($item as $key => $value) {
                 $item[$keys[$key]] = $value;
                 unset($item[$key]);
             }
-            
+
+            $item['group_id'] = $group_id;
+            $item['created_at'] = $now;
             $data[] = $item;
         }
 
