@@ -26,13 +26,14 @@ class AddressBookController extends Controller
 
     function store(Request $request)
     {
+
         $validator = Validator::make(
             $request->all(),
             [
-                "name" => "required|max:50",
-                "email" => "required|max:1000",
-                "phone" => "required|max:1000",
-                "address" => "required|max:1000"
+                "name.*" => "required|max:50",
+                "email.*" => "required|max:1000",
+                "phone.*" => "required|max:1000",
+                "address.*" => "required|max:1000"
             ]
         );
 
@@ -40,14 +41,25 @@ class AddressBookController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $validated = $validator->validated();
+        $input = $request->all();
+        unset($input["_token"]);
 
-        $validated['name'] = json_encode($this->separateMulitpleValues($validated["name"]));
-        $validated['email'] = json_encode($this->separateMulitpleValues($validated["email"]));
-        $validated['phone'] = json_encode($this->separateMulitpleValues($validated["phone"]));
+        $chunk = array_chunk($input, 4);
+
+        $data = [];
+        $keys = ["name", "email", "phone", "address"];
+
+        foreach ($chunk as $item) {
+            foreach ($item as $key => $value) {
+                $item[$keys[$key]] = $value;
+                unset($item[$key]);
+            }
+            
+            $data[] = $item;
+        }
 
         try {
-            AddressBook::create($validated);
+            AddressBook::insert($data);
             $this->successNotification("Address Book Entry created successfully");
         } catch (\Exception $e) {
             info("ADDRESSBOOK CONTROLLER => STORE : " . $e->getMessage());
@@ -62,10 +74,4 @@ class AddressBookController extends Controller
         $entry = AddressBook::findOrFail($id);
         return view('admin.address-book.show', compact('entry'));
     }
-
-    private function separateMulitpleValues($string, $separator = ",") {
-        $array = explode($separator, $string);
-        return $array;    
-    }
-
 }

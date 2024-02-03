@@ -51,9 +51,9 @@
 
                 <tr>
                     <th scope="row">{{ $row }}</th>
-                    <td>{{ $addressBook->formated_name }}</td>
-                    <td>{{ $addressBook->formated_email }}</td>
-                    <td>{{ $addressBook->formated_phone }}</td>
+                    <td>{{ $addressBook->name }}</td>
+                    <td>{{ $addressBook->email }}</td>
+                    <td>{{ $addressBook->phone }}</td>
                     <td>{{ \Carbon\Carbon::parse($addressBook->created_at)->isoFormat('ll') }}</td>
                    
                     <td>

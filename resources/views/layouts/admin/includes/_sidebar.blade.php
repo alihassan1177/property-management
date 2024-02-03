@@ -21,7 +21,8 @@
             <span>Units Management</span>
         </a>
     </li>
-    <li>
+
+    {{-- <li>
         <a class="@if(request()->routeIs('admin.owners.*')) active @endif" href="{{ route('admin.owners.index') }}">
             <i class="fa fa-users"></i>
             <span>Owners</span>
@@ -39,7 +40,7 @@
             <i class="fa fa-users"></i>
             <span>Tenants</span>
         </a>
-    </li>
+    </li> --}}
 
     <li>
         <a class="@if(request()->routeIs('admin.contracts.*')) active @endif" href="{{ route('admin.contracts.index') }}">
