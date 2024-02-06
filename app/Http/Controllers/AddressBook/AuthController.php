@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\AddressBook;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ResultNotification;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+    use ResultNotification;
 
     function login(Request $request)
     {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressBook\AuthController;
+use App\Http\Controllers\User\KeyDateController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest:address_book'], 'as' => 'address_book.'], function () {
@@ -26,7 +27,7 @@ Route::group(['middleware' => ['auth.address_book'], 'as' => 'address_book.'], f
     });
 
     Route::group(['prefix' => 'key-dates'], function () {
-        Route::get('/', function () {
-        })->name('key-dates.index');
+        Route::get('/', [KeyDateController::class, 'index'])->name('key-dates.index');
+        Route::get('/show/{id}', [KeyDateController::class, 'show'])->name('key-dates.show');
     });
 });

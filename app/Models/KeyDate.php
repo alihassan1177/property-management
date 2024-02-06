@@ -22,6 +22,6 @@ class KeyDate extends Model
     }
 
     function tenant() {
-        return $this->belongsTo(Tenant::class, "tenant_id", "id");
+        return $this->belongsTo(AddressBook::class, "tenant_id", "id");
     }
 }

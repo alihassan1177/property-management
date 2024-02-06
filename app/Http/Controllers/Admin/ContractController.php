@@ -68,7 +68,8 @@ class ContractController extends Controller
         try {
             Contract::create($validated);
             $property->update([
-                'status' => UnitStatus::OnRent
+                'status' => UnitStatus::OnRent,
+                'tenant_id' => $request->tenant_id
             ]);
             DB::commit();
             $this->successNotification("Contract added successfully");

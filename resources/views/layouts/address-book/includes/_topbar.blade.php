@@ -7,7 +7,7 @@
         <ul class="dropdown-menu">
             
             <li class="dropdown-item">
-                <form  action="{{ route('owner.logout') }}" method="post">
+                <form  action="{{ route('address_book.logout') }}" method="post">
                     @csrf
                     <button class="btn btn-sm btn-danger" type="submit">Logout</button>
                 </form>

@@ -53,7 +53,7 @@
                 <select style="width: 100%" name="property_id" id="property_id">
                     @foreach ($properties as $property)
                         <option value="{{ $property->id }}">
-                            {{ $property->cadastral_number }}
+                            {{ $property->cadastral_number . " : ". $property->address }}
                         </option>
                     @endforeach
                 </select>
