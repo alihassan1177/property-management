@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class AddressBook extends Model
+
+class AddressBook extends Authenticatable
 {
     use HasFactory;
 
@@ -16,5 +17,9 @@ class AddressBook extends Model
         "address",
         "group_id",
         "created_at"
+    ];
+
+    protected $hidden = [
+        "password"
     ];
 }

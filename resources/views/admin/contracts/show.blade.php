@@ -15,11 +15,27 @@
         Contract Details
     </h5>
 
+    <div class="mb-3">
+        <div>
+            <p class="m-0">Status: </p>
+            <form method="POST" action="{{ route('admin.contracts.show.change-status', $contract->id) }}">
+                @method('PUT')
+                @csrf
+                <select name="status" class="form-select">
+                    @foreach ($statuses as $status)
+                        <option @selected($status->value == $contract->status) value="{{ $status->value }}">{{ $status->name }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-sm btn-primary mt-2">Update</button>
+            </form>
+        </div>
+    </div>
+
     @if (isset($contract->document) && $contract->document)        
     <div class="mb-3">
         <div>
             <p class="m-0">Document: </p>
-            <a target="_blank" class="btn btn-dark" href="{{ asset('uploads/' . $contract->document) }}">
+            <a target="_blank" class="btn btn-dark" href="{{ asset($contract->document) }}">
                 {{ $contract->document }}
             </a>
         </div>

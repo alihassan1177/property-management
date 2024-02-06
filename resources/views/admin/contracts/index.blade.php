@@ -27,6 +27,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Contract ID</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
                     <th scope="col">Owner Phone</th>
@@ -37,7 +38,7 @@
 
                 @if (!$contracts->count())
                 <tr>
-                    <td colspan="6">
+                    <td colspan="10">
                         <p class="text-center m-0 py-3">No results found</p>
                     </td>
                 </tr>
@@ -52,6 +53,9 @@
                 <tr>
                     <th scope="row">{{ $row }}</th>
                     <th scope="row">{{ $contract->contract_id }}</th>
+                    <th scope="row">
+                        <span class="badge @if($contract->status == 'valid') bg-success @else bg-danger @endif">{{ str_replace("_", " ", strtoupper($contract->status)) }}</span>
+                    </th>
                     <th scope="row">{{ \Carbon\Carbon::parse($contract->start_date)->isoFormat('LL') }}</th>
                     <th scope="row">{{ \Carbon\Carbon::parse($contract->end_date)->isoFormat('LL') }}</th>
                     <th scope="row">{{ $contract->tenant->phone }}</th>
@@ -73,7 +77,7 @@
                                         <button>Update</button>
                                     </a>
                                 </li> --}}
-                                {{-- <li>
+                                <li>
                                     <form class="dropdown-item"
                                         action="{{ route('admin.contracts.delete', $contract->id) }}" method="POST"
                                         onclick="return confirm('{{ __('Are you sure you want to delete this. This cannot be undone?') }}')">
@@ -83,7 +87,7 @@
                                             Delete
                                         </button>
                                     </form>
-                                </li> --}}
+                                </li>
                             </ul>
                         </div>
                     </td>

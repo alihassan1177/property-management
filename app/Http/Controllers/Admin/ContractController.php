@@ -10,6 +10,7 @@ use App\Enums\UnitStatus;
 use App\Models\AddressBook;
 use App\Traits\ResultNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContractController extends Controller
 {
@@ -43,7 +44,7 @@ class ContractController extends Controller
             "end_date" => "required",
             "late_fee_amount" => "required",
             "early_termination_fee_amount" => "required",
-            "document" => "required"
+            "document" => "required|file"
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +53,7 @@ class ContractController extends Controller
 
         $document = request()->file('document');
         $documentName = time() . "-" . $document->getClientOriginalName();
-        $documentPath = $document->move("/uploads/contracts", $documentName);
+        $documentPath = $document->move("uploads/contracts", $documentName);
 
         $property = Property::findOrFail($request->property_id);
 
@@ -63,12 +64,18 @@ class ContractController extends Controller
         $validated['security_deposit'] = $property->security_deposit;
         $validated['status'] = ContractStatus::Valid;
 
+        DB::beginTransaction();
         try {
             Contract::create($validated);
-            $this->successNotification("Contract added successfully");            
+            $property->update([
+                'status' => UnitStatus::OnRent
+            ]);
+            DB::commit();
+            $this->successNotification("Contract added successfully");
         } catch (\Exception $e) {
+            DB::rollBack();
             info('ERROR WHILE CREATING CONTRACT : ' . $e->getMessage());
-            $this->errorNotification("Something went wrong, please try again later");                        
+            $this->errorNotification("Something went wrong, please try again later");
         }
         return redirect()->route('admin.contracts.index');
     }
@@ -79,6 +86,77 @@ class ContractController extends Controller
             'property' => ['owner'],
             'tenant'
         ])->findOrFail($id);
-        return view('admin.contracts.show', compact('contract'));
+
+        $statuses = ContractStatus::cases();
+
+        return view('admin.contracts.show', compact('contract', 'statuses'));
+    }
+
+    function changeStatus(Request $request, $id)
+    {
+        $validator = validator()->make($request->all(), [
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $contract = Contract::with([
+            'property' => ['owner'],
+            'tenant'
+        ])->findOrFail($id);
+
+        $property = $contract->property;
+
+        DB::beginTransaction();
+        try {
+            if ($request->status == ContractStatus::Expired->value || $request->status == ContractStatus::Teminated->value) {
+                $property->update([
+                    'status' => UnitStatus::Available
+                ]);
+            }
+
+            if ($request->status == ContractStatus::Valid->value) {
+                $property->update([
+                    'status' => UnitStatus::OnRent
+                ]);
+            }
+
+            $contract->update([
+                'status' => $request->status
+            ]);
+
+            DB::commit();
+            $this->successNotification("Status updated successfully");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            info('ERROR : ' . $e->getMessage());
+            $this->errorNotification("Something went wrong, please try again later");
+        }
+
+        return back();
+    }
+
+    function delete($id)
+    {
+        $contract = Contract::with([
+            'property' => ['owner'],
+            'tenant'
+        ])->findOrFail($id);
+
+        $property = $contract->property;
+
+        if ($contract->status == ContractStatus::Expired->value || $contract->status  == ContractStatus::Teminated->value) {
+            $contract->delete();
+            $property->update([
+                'status' => UnitStatus::Available
+            ]);
+            $this->successNotification("Contract deleted successfully");
+        } else {
+            $this->errorNotification("Cannot delete a valid contract");
+        }
+
+        return back();
     }
 }

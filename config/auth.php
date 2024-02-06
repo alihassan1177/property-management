@@ -51,6 +51,10 @@ return [
         'owner' => [
             'driver' => 'session',
             'provider' => 'owners'
+        ],
+        'address_book' => [
+            'driver' => 'session',
+            'provider' => 'address_books'
         ]
     ],
 
@@ -87,6 +91,10 @@ return [
         'owners' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'address_books' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\AddressBook::class,
         ]
 
         // 'users' => [

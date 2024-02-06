@@ -119,6 +119,8 @@ Route::group(['middleware' => ['is_admin_authenticated'], 'as' => 'admin.'], fun
         Route::get('/create', [ContractController::class, 'create'])->name('contracts.create');
         Route::post('/store', [ContractController::class, 'store'])->name('contracts.store');
         Route::get('/show/{id}', [ContractController::class, 'show'])->name('contracts.show');
+        Route::put('/show/{id}/change-status', [ContractController::class, 'changeStatus'])->name('contracts.show.change-status');
+        Route::delete('/delete/{id}', [ContractController::class, 'delete'])->name('contracts.delete');
     });
 
     Route::group(['prefix' => 'tenants'], function () {
