@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\AddressBook\AuthController;
-use App\Http\Controllers\User\KeyDateController;
+use App\Http\Controllers\AddressBook\ContractController;
+use App\Http\Controllers\AddressBook\KeyDateController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest:address_book'], 'as' => 'address_book.'], function () {
@@ -17,8 +18,8 @@ Route::group(['middleware' => ['auth.address_book'], 'as' => 'address_book.'], f
     })->name('dashboard.index');
 
     Route::group(['prefix' => 'contracts'], function () {
-        Route::get('/', function () {
-        })->name('contracts.index');
+        Route::get('/', [ContractController::class, 'index'])->name('contracts.index');
+        Route::get('/show/{id}', [ContractController::class, 'show'])->name('contracts.show');
     });
 
     Route::group(['prefix' => 'tasks'], function () {
